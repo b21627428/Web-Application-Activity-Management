@@ -1,0 +1,20 @@
+.card_shadow {
+	padding: 40px;
+	background-color: black;
+	position: static;
+}
+.card_shadow:hover {
+	box-shadow: 5px 10px 8px #888888;
+	position: relative;
+	padding: 45px;
+}
+.mybg {
+	background: url(./bgimg.jpg);
+	background-size: cover;
+	height: 100vh;
+}
+.home {
+	padding-top: 40px;
+	padding-left: 80px;
+	padding-bottom: 60px;
+}

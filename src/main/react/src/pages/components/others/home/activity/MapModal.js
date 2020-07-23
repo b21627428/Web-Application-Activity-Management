@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 
 import RoomIcon from "@material-ui/icons/Room";
 
-import SimpleMap from "./SimpleMap";
+import MapContainer from "./MapContainer";
 
 function getModalStyle() {
 	const top = 50;
@@ -34,6 +34,11 @@ export default function MapModal(props) {
 	const [modalStyle] = React.useState(getModalStyle);
 	const [open, setOpen] = React.useState(false);
 	const { data } = props;
+	const location = {
+		adress: data.address,
+		lat: data.lat,
+		lng: data.lng,
+	};
 
 	const handleOpen = () => {
 		setOpen(true);
@@ -45,7 +50,7 @@ export default function MapModal(props) {
 	const body = (
 		<div style={modalStyle} className={classes.paper}>
 			<div>
-				<SimpleMap data={data} />
+				<MapContainer location={location} />
 			</div>
 		</div>
 	);
@@ -63,12 +68,7 @@ export default function MapModal(props) {
 				<RoomIcon />
 				View on Map
 			</Button>
-			<Modal
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="simple-modal-title"
-				aria-describedby="simple-modal-description"
-			>
+			<Modal open={open} onClose={handleClose}>
 				{body}
 			</Modal>
 		</div>

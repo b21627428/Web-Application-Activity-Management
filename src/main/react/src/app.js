@@ -11,8 +11,6 @@ import AdminPage from "./pages/admin.page";
 
 import { ProtectedRoute } from "./ProtectedRoute";
 
-import styles from "./pages/components/others/home/mystyle.module.css";
-
 require("dotenv").config();
 
 class App extends React.Component {
@@ -21,7 +19,7 @@ class App extends React.Component {
 		if (user != null && user.scopes[0].authority === "ROLE_ADMIN")
 			return <AdminPage />;
 		return (
-			<div className={styles.mybg}>
+			<div>
 				<Router>
 					<Switch>
 						<ProtectedRoute path="/register-login" component={RegisterLogin} />

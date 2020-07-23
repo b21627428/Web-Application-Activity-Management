@@ -2,11 +2,11 @@ import React from "react";
 
 import { listActivities } from "../../../../api/apiCalls";
 
-import ActivityInfo from "./ActivityInfo";
+import ActivityInfo from "./activity/ActivityInfo";
 
 import { Pagination } from "./Pagination";
 
-import { Tabs, Tab, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 class ActivityList extends React.Component {
 	constructor() {
@@ -87,28 +87,25 @@ class ActivityList extends React.Component {
 							{data.map((row, index) => (
 								<span
 									style={{
-										width: "350px",
+										width: "370px",
 										height: "auto",
 										display: "inline-block",
 									}}
 									key={row.activityId}
 								>
+									{console.log(process.env.GOOGLE_MAP_API_KEY)}
 									<ActivityInfo data={row} index={index} />
 								</span>
 							))}
 						</div>
 					</div>
 				) : (
-					<Tabs defaultActiveKey="notFound" id="uncontrolled-tab-example">
-						<Tab eventKey="notFound" className="m-5">
-							<Card
-								className="p-5 shadow"
-								style={{ backgroundColor: "#e3e3e3" }}
-							>
-								Not found ...
-							</Card>
-						</Tab>
-					</Tabs>
+					<Card
+						className="p-5 shadow"
+						style={{ marginRight: "125px", backgroundColor: "#e3e3e3" }}
+					>
+						Not found ...
+					</Card>
 				)}
 			</div>
 		);

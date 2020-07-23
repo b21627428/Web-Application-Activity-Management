@@ -11,13 +11,13 @@ import { Row, Col } from "react-bootstrap";
 // import "primereact/resources/primereact.min.css";
 // import "primeicons/primeicons.css";
 
-import MyModal from "./MyModal";
+import EnrollModal from "./EnrollModal";
 import MapModal from "./MapModal";
 
-import styles from "./mystyle.module.css";
+import styles from "../mystyle.module.css";
 
-import { checkEnrollment } from "../../../../api/apiCalls";
-import { cancelEnrollment } from "../../../../api/apiCalls";
+import { checkEnrollment } from "../../../../../api/apiCalls";
+import { cancelEnrollment } from "../../../../../api/apiCalls";
 
 class ActivityInfo extends React.Component {
 	constructor() {
@@ -30,9 +30,13 @@ class ActivityInfo extends React.Component {
 		if (r === true) {
 			try {
 				await cancelEnrollment(this.getParams());
-				this.setState({ isAlreadyEnrolled: false });
+				this.changeAlreadyEnrolled(false);
 			} catch (error) {}
 		}
+	};
+
+	changeAlreadyEnrolled = (value) => {
+		this.setState({ isAlreadyEnrolled: value });
 	};
 
 	getParams = () => {
@@ -46,8 +50,10 @@ class ActivityInfo extends React.Component {
 	};
 	componentDidMount = async (event) => {
 		try {
-			const response = await checkEnrollment(this.getParams());
-			this.setState({ isAlreadyEnrolled: response.data });
+			if (localStorage.getItem("user")) {
+				const response = await checkEnrollment(this.getParams());
+				this.setState({ isAlreadyEnrolled: response.data });
+			} else this.setState({ isAlreadyEnrolled: false });
 		} catch (error) {
 			this.setState({ isAlreadyEnrolled: false });
 		}
@@ -149,14 +155,17 @@ class ActivityInfo extends React.Component {
 									Cancel
 								</Button>
 							) : (
-								<MyModal data={data} getParams={this.getParams} />
+								<EnrollModal
+									changeAlreadyEnrolled={this.changeAlreadyEnrolled}
+									data={data}
+									getParams={this.getParams}
+								/>
 							)}
 						</Col>
 						<Col style={{ position: "static" }}>
 							<MapModal data={data} />
 						</Col>
 					</Row>
-					{console.log(typeof data.lat)}
 				</Card>
 			</div>
 		);

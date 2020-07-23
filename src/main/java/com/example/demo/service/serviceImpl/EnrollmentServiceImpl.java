@@ -1,17 +1,24 @@
 package com.example.demo.service.serviceImpl;
 
 
+import com.example.demo.dto.QRCodeDTO;
+import com.example.demo.dto.activity.ActivityDTO;
 import com.example.demo.dto.enrollment.CancelEnrollmentRequst;
 import com.example.demo.dto.enrollment.MakeEnrollmentRequest;
+import com.example.demo.dto.person.PersonDTO;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.EnrollmentService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +29,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     private final ActivityRepository activityRepository;
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+    private final ModelMapper modelMapper;
+    private final Environment environment;
 
 
     @Override
-    public void makeEnrollment(MakeEnrollmentRequest request) {
+    public QRCodeDTO makeEnrollment(MakeEnrollmentRequest request) {
         Person person = isValidPerson(request.getIdentificationNumber());
         Activity activity = isValidActivity(request.getActivityId());
         isAlreadyEnroll(person.getId(),activity.getId(),"make");
@@ -45,23 +54,27 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                         Question question = questionRepository.findById(Long.parseLong(s)).get();
                         question.getAnswers().add(answer);
                         questionRepository.save(question);
-                        System.out.println(answer);
 
                         enrollment.getGivenAnswers().add(answer);
-                        System.out.println(enrollment);
 
                     }
                     enrollmentRepository.save(enrollment);
 
+                    ActivityDTO activityDTO = modelMapper.map(activity,ActivityDTO.class);
+                    activityDTO.setActivityId(request.getActivityId());
+                    return new QRCodeDTO(modelMapper.map(person, PersonDTO.class),activityDTO);
                 }
                 else throw new RuntimeException("The quota is full");
             }else throw new RuntimeException("All questions must be answered");
         }else throw new RuntimeException("The activity is not active");
     }
 
+
     @Override
     public void cancelEnrollment(CancelEnrollmentRequst request) {
         enrollmentRepository.delete(checkEnrollment(request));
+        File file = new File(environment.getProperty("image_path")+request.getIdentificationNumber()+"-"+request.getActivityId()+"-QRCODE.png");
+        file.delete();
     }
 
     @Override

@@ -22,6 +22,7 @@ public class Enrollment extends BaseEntity{
 
     private LocalDateTime enrollmentDate;
 
+
     @OneToMany
     @JoinColumn(name = "enrollment_id")
     private List<Answer> givenAnswers;

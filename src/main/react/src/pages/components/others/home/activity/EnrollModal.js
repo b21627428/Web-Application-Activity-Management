@@ -31,7 +31,7 @@ export default function MyModal(props) {
 	// getModalStyle is not a pure function, we roll the style only on the first render
 	const [modalStyle] = React.useState(getModalStyle);
 	const [open, setOpen] = React.useState(false);
-	const { data } = props;
+	const { data, getParams, changeAlreadyEnrolled } = props;
 
 	const handleOpen = () => {
 		if (!localStorage.getItem("user")) {
@@ -47,7 +47,12 @@ export default function MyModal(props) {
 			<div className="p-3">
 				<h2 id="simple-modal-title">{data.name}</h2>
 				<div id="simple-modal-description">
-					<QuestionList data={props.data} getParams={props.getParams} />
+					<QuestionList
+						handleClose={handleClose}
+						changeAlreadyEnrolled={changeAlreadyEnrolled}
+						data={data}
+						getParams={getParams}
+					/>
 				</div>
 			</div>
 		</div>

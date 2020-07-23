@@ -6,15 +6,18 @@
 .card_shadow:hover {
 	box-shadow: 5px 10px 8px #888888;
 	position: relative;
-	padding: 45px;
 }
 .mybg {
 	background: url(./bgimg.jpg);
 	background-size: cover;
+	-ms-background-size: cover;
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	-webkit-background-size: cover;
+	z-index: -1;
 	height: 100vh;
 }
 .home {
 	padding-top: 40px;
 	padding-left: 80px;
-	padding-bottom: 60px;
 }

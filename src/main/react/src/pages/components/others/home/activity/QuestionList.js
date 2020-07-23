@@ -1,10 +1,10 @@
 import React from "react";
 
-import { Input } from "../guest/Input";
+import { Input } from "../../guest/Input";
 import { Button } from "react-bootstrap";
 
-import { getAskedQuestions } from "../../../../api/apiCalls";
-import { makeEnrollment } from "../../../../api/apiCalls";
+import { getAskedQuestions } from "../../../../../api/apiCalls";
+import { makeEnrollment } from "../../../../../api/apiCalls";
 
 class QuestionList extends React.Component {
 	constructor() {
@@ -59,10 +59,16 @@ class QuestionList extends React.Component {
 				const body = await this.props.getParams();
 				body["givenAnswers"] = this.state.givenAnswers;
 				const response = await makeEnrollment(body);
-				alert(response.data);
-				window.location.reload();
+				console.log(response.data);
+				this.props.changeAlreadyEnrolled(true);
+				//alert("Sucessfully enrolled.");
 			} catch (error) {
-				alert(error.response);
+				try {
+					alert(error.response.data.message);
+				} catch (error2) {
+					alert("Connection failed");
+				}
+				this.props.handleClose();
 			}
 		} else {
 			alert("All blanks must be filled...");

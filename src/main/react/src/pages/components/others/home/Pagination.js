@@ -12,7 +12,7 @@ export const Pagination = ({ postPerPage, totalPosts, paginate, search }) => {
 		<nav>
 			<ul className="pagination">
 				{pageNumbers.map((number) => (
-					<li style={{ zIndex: 1 }} key={number} className="page-item">
+					<li style={{ zIndex: 1 }} key={number} className="page-item mr-1">
 						<a
 							style={{
 								backgroundColor: "#e3e3e3",

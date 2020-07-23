@@ -56,8 +56,13 @@ class LoginForm extends React.Component {
 				try {
 					if (error.response.status === 422)
 						alert("The identification number or password wrong");
-					else if (error.response.status === 400)
+					else if (error.response.status === 400) {
 						this.setState({ errors: error.response.data.validationErrors });
+						alert(
+							"Identification number " +
+								error.response.data.validationErrors.identificationNumber
+						);
+					}
 				} catch (err) {
 					alert("Connection failed...");
 				}

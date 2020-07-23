@@ -14,4 +14,5 @@ public interface EnrollmentService {
 
     Enrollment checkEnrollment(CancelEnrollmentRequst request);
 
+    QRCodeDTO getQrCodeDTO(String identificationNumber, Long activityId);
 }

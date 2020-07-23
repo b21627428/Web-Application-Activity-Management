@@ -30,7 +30,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
     private final ModelMapper modelMapper;
-    private final Environment environment;
 
 
     @Override
@@ -73,13 +72,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public void cancelEnrollment(CancelEnrollmentRequst request) {
         enrollmentRepository.delete(checkEnrollment(request));
-        File file = new File(environment.getProperty("image_path")+request.getIdentificationNumber()+"-"+request.getActivityId()+"-QRCODE.png");
-        file.delete();
     }
 
     @Override
     public Enrollment checkEnrollment(CancelEnrollmentRequst request){
         return isAlreadyEnroll(isValidPerson(request.getIdentificationNumber()).getId(),isValidActivity(request.getActivityId()).getId(),"cancel");
+    }
+
+    @Override
+    public QRCodeDTO getQrCodeDTO(String identificationNumber, Long activityId) {
+        return new QRCodeDTO(modelMapper.map(isValidPerson(identificationNumber),PersonDTO.class),modelMapper.map(isValidActivity(activityId),ActivityDTO.class));
     }
 
     private Enrollment isAlreadyEnroll(Long personId, Long activityId,String makeOrCancel) {

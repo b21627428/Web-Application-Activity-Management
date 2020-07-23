@@ -13,6 +13,7 @@ import { Row, Col } from "react-bootstrap";
 
 import EnrollModal from "./EnrollModal";
 import MapModal from "./MapModal";
+import QrCodeModal from "./QrCodeModal";
 
 import styles from "../mystyle.module.css";
 
@@ -144,16 +145,21 @@ class ActivityInfo extends React.Component {
 									Not Active
 								</Button>
 							) : isAlreadyEnrolled === true ? (
-								<Button
-									style={{
-										backgroundColor: "darkred",
-										color: "white",
-										position: "static",
-									}}
-									onClick={this.cancel}
-								>
-									Cancel
-								</Button>
+								<Row>
+									<Button
+										style={{
+											backgroundColor: "darkred",
+											color: "white",
+											position: "static",
+											border: "",
+										}}
+										onClick={this.cancel}
+									>
+										Cancel
+									</Button>
+
+									<QrCodeModal getParams={this.getParams} />
+								</Row>
 							) : (
 								<EnrollModal
 									changeAlreadyEnrolled={this.changeAlreadyEnrolled}

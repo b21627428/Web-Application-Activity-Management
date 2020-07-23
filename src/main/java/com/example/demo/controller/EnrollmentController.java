@@ -15,6 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,14 +44,17 @@ public class EnrollmentController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> makeEnrollment(@Valid @RequestBody MakeEnrollmentRequest request) throws IOException, WriterException {
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(qrCodeGenerator.writeQRCode(enrollmentService.makeEnrollment(request)));
+    public String makeEnrollment(@Valid @RequestBody MakeEnrollmentRequest request) throws IOException, WriterException {
+        return qrCodeGenerator.writeQRCode(enrollmentService.makeEnrollment(request));
     }
 
-    @DeleteMapping
+    @GetMapping("/qrcode")
+    public String getQrCode(@RequestParam String identificationNumber, @RequestParam Long activityId) throws IOException, WriterException {
+        return qrCodeGenerator.writeQRCode(enrollmentService.getQrCodeDTO(identificationNumber,activityId));
+    }
+
+
+        @DeleteMapping
     public ResponseEntity cancelEnrollment(@RequestParam String identificationNumber,@RequestParam Long activityId){
         try{
             enrollmentService.cancelEnrollment(new CancelEnrollmentRequst(identificationNumber,activityId));

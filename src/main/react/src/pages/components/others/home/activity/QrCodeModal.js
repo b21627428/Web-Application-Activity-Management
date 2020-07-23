@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 
 import { Button } from "react-bootstrap";
-import EnrollContainer from "./EnrollContainer";
+import QrCodeContainer from "./QrCodeContainer";
 
 function getModalStyle() {
 	const top = 50;
@@ -19,19 +19,18 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
 	paper: {
 		position: "absolute",
-		width: 800,
 		backgroundColor: theme.palette.background.paper,
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
 	},
 }));
 
-export default function EnrollModal(props) {
+export default function QrCodeModal(props) {
 	const classes = useStyles();
 	// getModalStyle is not a pure function, we roll the style only on the first render
 	const [modalStyle] = React.useState(getModalStyle);
 	const [open, setOpen] = React.useState(false);
-	const { data, getParams, changeAlreadyEnrolled } = props;
+	const { getParams } = props;
 
 	const handleOpen = () => {
 		if (!localStorage.getItem("user")) {
@@ -45,14 +44,8 @@ export default function EnrollModal(props) {
 	const body = (
 		<div style={modalStyle} className={classes.paper}>
 			<div className="p-3">
-				<h2 id="simple-modal-title">{data.name}</h2>
 				<div id="simple-modal-description">
-					<EnrollContainer
-						handleClose={handleClose}
-						changeAlreadyEnrolled={changeAlreadyEnrolled}
-						data={data}
-						getParams={getParams}
-					/>
+					<QrCodeContainer handleClose={handleClose} getParams={getParams} />
 				</div>
 			</div>
 		</div>
@@ -62,13 +55,15 @@ export default function EnrollModal(props) {
 		<div>
 			<Button
 				style={{
-					backgroundColor: "darkgreen",
+					border: "0",
+					backgroundColor: "black",
 					color: "white",
-					border: "0px",
+					position: "static",
+					marginLeft: "5px",
 				}}
 				onClick={handleOpen}
 			>
-				ENROLL
+				QR Code
 			</Button>
 			<Modal
 				open={open}

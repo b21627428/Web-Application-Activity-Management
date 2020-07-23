@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { getAskedQuestions } from "../../../../../api/apiCalls";
 import { makeEnrollment } from "../../../../../api/apiCalls";
 
-class QuestionList extends React.Component {
+class EnrollContainer extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -58,10 +58,9 @@ class QuestionList extends React.Component {
 			try {
 				const body = await this.props.getParams();
 				body["givenAnswers"] = this.state.givenAnswers;
-				const response = await makeEnrollment(body);
-				console.log(response.data);
+				await makeEnrollment(body);
+				alert("Sucessfully enrolled");
 				this.props.changeAlreadyEnrolled(true);
-				//alert("Sucessfully enrolled.");
 			} catch (error) {
 				try {
 					alert(error.response.data.message);
@@ -101,4 +100,4 @@ class QuestionList extends React.Component {
 		);
 	}
 }
-export default QuestionList;
+export default EnrollContainer;

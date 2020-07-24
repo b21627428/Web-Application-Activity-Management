@@ -72,9 +72,9 @@ class ActivityList extends React.Component {
 	render() {
 		const { data, total, size } = this.state;
 		return (
-			<div className="ml-5">
+			<div>
 				{data.length !== 0 ? (
-					<div>
+					<div className="p-5 mx-5 ">
 						<div>
 							<Pagination
 								postPerPage={size}
@@ -93,7 +93,6 @@ class ActivityList extends React.Component {
 									}}
 									key={row.activityId}
 								>
-									{console.log(process.env.GOOGLE_MAP_API_KEY)}
 									<ActivityInfo data={row} index={index} />
 								</span>
 							))}
@@ -101,8 +100,8 @@ class ActivityList extends React.Component {
 					</div>
 				) : (
 					<Card
-						className="p-5 shadow"
-						style={{ marginRight: "125px", backgroundColor: "#e3e3e3" }}
+						className="p-5 m-5 shadow"
+						style={{ backgroundColor: "#e3e3e3" }}
 					>
 						Not found ...
 					</Card>

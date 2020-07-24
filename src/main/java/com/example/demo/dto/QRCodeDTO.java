@@ -5,10 +5,12 @@ import com.example.demo.dto.person.PersonDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class QRCodeDTO {
 
     private PersonDTO person;

@@ -60,30 +60,8 @@ public class ActivityServiceImpl implements ActivityService {
         activityRepository.save(activity);
     }
 
-    @Override
-    public void addQuestion(AddQuestionDTO addQuestionDTO) {
-        Activity activity = getActivity(addQuestionDTO.getActivityId());
-        isValidDate(activity.getStartDate(),"The activity date already up so can not be add");
-        Question question = new Question(null,addQuestionDTO.getText(),activity,null);
-        questionRepository.save(question);
-    }
 
-    @Override
-    public void deleteQuestion(long parseLong) {
-        Question question = getQuestion(parseLong);
-        Activity activity = getActivity(question.getBelongsToActivity().getActivityId());
-        isValidDate(activity.getStartDate(),"The activity date already up so can not be delete");
-        questionRepository.delete(question);
-    }
 
-    @Override
-    public void updateQuestion(UpdateQuestionDTO updateQuestionDTO) {
-        Question question = getQuestion(updateQuestionDTO.getQuestionId());
-        Activity activity = getActivity(updateQuestionDTO.getActivityId());
-        isValidDate(activity.getStartDate(),"The activity date already up so can not be update");
-        modelMapper.map(updateQuestionDTO,question);
-        questionRepository.save(question);
-    }
 
     @Override
     public Activity getActivity(Long activityId){
@@ -94,16 +72,4 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
 
-
-
-    private Question getQuestion(Long questionId){
-        return questionRepository.findById(questionId).orElseThrow(RuntimeException::new);
-    }
-    private void isValidDate(LocalDateTime date, String message){
-        LocalDateTime now = LocalDateTime.now();
-        if(date.isBefore(now)) throw new IllegalArgumentException(message);
-    }
-    /*private void changeDate(Date date){
-        date.setHours(date.getHours()-3);
-    }
 }*/

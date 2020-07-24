@@ -30,6 +30,7 @@ class QrCodeContainer extends React.Component {
 					style={{ width: 500, height: 500 }}
 					src={"data:image/png;base64," + base64}
 				/>
+				{console.log(base64)}
 			</div>
 		);
 	}

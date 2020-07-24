@@ -10,8 +10,6 @@ public interface PersonService {
 
     String login(LoginRequest loginRequest);
 
-    //void deletePerson(String identificationNumber);
-
     Person getPerson(String identificationNumber);
 
 

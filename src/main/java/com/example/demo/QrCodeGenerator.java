@@ -16,14 +16,18 @@ import java.util.Base64;
 public class QrCodeGenerator {
 
 
-    public String writeQRCode(QRCodeDTO qrCodeDTO) throws WriterException, IOException {
-
-        String content = qrCodeDTO.getPerson().toString()+" "+qrCodeDTO.getActivity().toString();
+    public String create(String content) throws IOException, WriterException {
+        return transformToBase64(createImage(content));
+    }
+    public String transformToBase64(ByteArrayOutputStream array){
+        return new String(Base64.getEncoder().encode(array.toByteArray()));
+    }
+    public ByteArrayOutputStream createImage(String content) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, 500, 500);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         MatrixToImageWriter.writeToStream(bitMatrix,"png", outputStream);
-
-        return new String(Base64.getEncoder().encode(outputStream.toByteArray()));
+        return outputStream;
     }
+
 }

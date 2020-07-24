@@ -48,25 +48,11 @@ public class PersonServiceImpl implements PersonService {
         );
         return jwtTokenUtil.generateToken(getPerson(loginRequest.getIdentificationNumber()));
     }
-/*
-    @Override
-    public void deletePerson(String identificationNumber) {
-        personRepository.delete(getPerson(identificationNumber));
-    }
-*/
+
 
     @Override
     public Person getPerson(String identificationNumber) {
         return  personRepository.findByIdentificationNumber(identificationNumber).orElseThrow(RuntimeException::new);
     }
 
-
-    /*
-    @Override
-    public void updatePerson(UpdateRequest updateRequest) {
-        Person person = getPerson(updateRequest.getIdentificationNumber());
-        if(updateRequest.getPassword() == null) updateRequest.setPassword(person.getPassword());
-        modelMapper.map(updateRequest,person);
-        personRepository.save(person);
-    }*/
 }

@@ -10,8 +10,6 @@ public interface ActivityService {
 
     //Page<ActivityDTO> listActivities(Integer page ,Integer size,String sortBy,String search);
 
-    //Page<ActivityDTO> getPersonsActivities(Integer page , Integer size, String sortBy, String identificationNumber);
-
     /*
     void createActivity(CreateActivityDTO createActivityDTO);
 
@@ -19,11 +17,7 @@ public interface ActivityService {
 
     void updateActivity(UpdateActivityDTO updateActivityDTO);
 
-    void addQuestion(AddQuestionDTO addQuestionDTO);
 
-    void deleteQuestion(long parseLong);
-
-    void updateQuestion(UpdateQuestionDTO updateQuestionDTO);
 
     Activity getActivity(Long id);*/
 }

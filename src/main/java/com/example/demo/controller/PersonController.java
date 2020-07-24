@@ -39,35 +39,4 @@ public class PersonController {
             return ResponseEntity.unprocessableEntity().body("Identification number or password wrong");
         }
     }
-    /*
-    @DeleteMapping("/{identificationNumber}")
-    public ResponseEntity removePerson(@PathVariable String identificationNumber){
-        try{
-            personService.deletePerson(identificationNumber);
-            return ResponseEntity.ok("The user deleted");
-        }catch (Exception e){
-            return ResponseEntity.unprocessableEntity().body("Identification number wrong");
-        }
-    }
-    @GetMapping("/{identificationNumber}")
-    public ResponseEntity getPerson(@PathVariable String identificationNumber){
-        try{
-            return ResponseEntity.ok(modelMapper.map(personService.getPerson(identificationNumber), GetPersonResponse.class));
-        }catch (Exception e){
-            return ResponseEntity.unprocessableEntity().body("There is no user");
-        }
-    }
-    /*
-    @PutMapping
-    public ResponseEntity updatePerson(@Valid @RequestBody UpdateRequest updateRequest){
-        try{
-            personService.updatePerson(updateRequest);
-            return ResponseEntity.ok("The user updated...");
-        }catch (Exception e){
-            return ResponseEntity.unprocessableEntity().body("There is no user");
-        }
-    }*/
-
-
-
 }

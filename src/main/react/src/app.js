@@ -19,7 +19,7 @@ class App extends React.Component {
 		if (user != null && user.scopes[0].authority === "ROLE_ADMIN")
 			return <AdminPage />;
 		return (
-			<div>
+			<div style={{ backgroundColor: "whitesmoke", height: "100vh" }}>
 				<Router>
 					<Switch>
 						<ProtectedRoute path="/register-login" component={RegisterLogin} />

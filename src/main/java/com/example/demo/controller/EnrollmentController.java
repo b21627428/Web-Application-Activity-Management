@@ -1,27 +1,23 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.EmailService;
 import com.example.demo.QrCodeGenerator;
-import com.example.demo.dto.ImageDTO;
+import com.example.demo.dto.QRCodeDTO;
 import com.example.demo.dto.enrollment.CancelEnrollmentRequst;
 import com.example.demo.dto.enrollment.MakeEnrollmentRequest;
 import com.example.demo.service.EnrollmentService;
 import com.google.zxing.WriterException;
 import lombok.RequiredArgsConstructor;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
-import java.io.InputStream;
 
 
 @RestController
@@ -31,6 +27,7 @@ import java.io.InputStream;
 public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
+    private final EmailService emailService;
     private final QrCodeGenerator qrCodeGenerator;
 
     @GetMapping
@@ -44,13 +41,14 @@ public class EnrollmentController {
     }
 
     @PostMapping
-    public String makeEnrollment(@Valid @RequestBody MakeEnrollmentRequest request) throws IOException, WriterException {
-        return qrCodeGenerator.writeQRCode(enrollmentService.makeEnrollment(request));
+    public void makeEnrollment(@Valid @RequestBody MakeEnrollmentRequest request) throws IOException, WriterException, MessagingException {
+        emailService.send(enrollmentService.makeEnrollment(request));
+
     }
 
     @GetMapping("/qrcode")
     public String getQrCode(@RequestParam String identificationNumber, @RequestParam Long activityId) throws IOException, WriterException {
-        return qrCodeGenerator.writeQRCode(enrollmentService.getQrCodeDTO(identificationNumber,activityId));
+        return qrCodeGenerator.create(enrollmentService.getQrCodeDTO(identificationNumber,activityId).toString());
     }
 
 

@@ -9,16 +9,13 @@ import com.example.demo.dto.person.PersonDTO;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.EnrollmentService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +30,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
 
     @Override
-    public QRCodeDTO makeEnrollment(MakeEnrollmentRequest request) {
+    public HashMap<String,String> makeEnrollment(MakeEnrollmentRequest request) {
         Person person = isValidPerson(request.getIdentificationNumber());
         Activity activity = isValidActivity(request.getActivityId());
         isAlreadyEnroll(person.getId(),activity.getId(),"make");
@@ -61,7 +58,10 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
                     ActivityDTO activityDTO = modelMapper.map(activity,ActivityDTO.class);
                     activityDTO.setActivityId(request.getActivityId());
-                    return new QRCodeDTO(modelMapper.map(person, PersonDTO.class),activityDTO);
+                    HashMap<String,String> map = new HashMap<String,String>();
+                    map.put("content",new QRCodeDTO(modelMapper.map(person, PersonDTO.class),activityDTO).toString());
+                    map.put("toEmail",person.getEmail());
+                    return map;
                 }
                 else throw new RuntimeException("The quota is full");
             }else throw new RuntimeException("All questions must be answered");

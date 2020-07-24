@@ -22,7 +22,7 @@ public class EmailService {
     private final QrCodeGenerator qrCodeGenerator;
     private final Environment environment;
 
-    public void send(HashMap<String,String> map) throws MessagingException {
+    public void send(HashMap<String,String> map,String activityName) throws MessagingException {
 
         Properties properties = new Properties();
         properties.put("mail.smtp.auth","true");
@@ -41,20 +41,20 @@ public class EmailService {
                 return new PasswordAuthentication(myAccountEmail,password);
             }
         });
-        Message message = prepareMessage(session,myAccountEmail,toEmail,content);
+        Message message = prepareMessage(session,myAccountEmail,toEmail,content,activityName);
         Transport.send(message);
 
     }
-    private Message prepareMessage(Session session,String myAccountEmail,String toEmail,String content){
+    private Message prepareMessage(Session session,String myAccountEmail,String toEmail,String content,String activityName){
         Message message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO,new InternetAddress(toEmail));
-            message.setSubject("Qr Code for Enrollment");
+            message.setSubject("Qr Code for "+activityName);
             String htmlText =
                     String.format("<div>Your Qr Code is below for activity.<hr/><img alt='Can not create' style='width:500px;height:500px' src='data:image/png;base64,%s'/></div>", qrCodeGenerator.create(content));
             System.out.println(htmlText);
-            message.setContent(htmlText,"text/html; charset=ISO-8859-1");
+            message.setContent(htmlText,"text/html");
             return message;
         } catch (Exception e) {
             e.printStackTrace();

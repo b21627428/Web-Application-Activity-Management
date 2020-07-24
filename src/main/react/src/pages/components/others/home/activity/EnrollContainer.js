@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 
 import { getAskedQuestions } from "../../../../../api/apiCalls";
 import { makeEnrollment } from "../../../../../api/apiCalls";
+import { sendEmail } from "../../../../../api/apiCalls";
 
 class EnrollContainer extends React.Component {
 	constructor() {
@@ -59,8 +60,9 @@ class EnrollContainer extends React.Component {
 				const body = await this.props.getParams();
 				body["givenAnswers"] = this.state.givenAnswers;
 				await makeEnrollment(body);
-				alert("Sucessfully enrolled");
+				alert("Sucessfully enrolled.Please check your email for Qr Code...");
 				this.props.changeAlreadyEnrolled(true);
+				sendEmail(this.props.getParams());
 			} catch (error) {
 				try {
 					alert(error.response.data.message);

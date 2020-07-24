@@ -18,6 +18,7 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 
 @RestController
@@ -41,8 +42,8 @@ public class EnrollmentController {
     }
 
     @PostMapping
-    public void makeEnrollment(@Valid @RequestBody MakeEnrollmentRequest request) throws IOException, WriterException, MessagingException {
-        emailService.send(enrollmentService.makeEnrollment(request));
+    public ResponseEntity makeEnrollment(@Valid @RequestBody MakeEnrollmentRequest request) throws IOException, WriterException, MessagingException {
+        return ResponseEntity.ok(enrollmentService.makeEnrollment(request));
 
     }
 
@@ -50,9 +51,17 @@ public class EnrollmentController {
     public String getQrCode(@RequestParam String identificationNumber, @RequestParam Long activityId) throws IOException, WriterException {
         return qrCodeGenerator.create(enrollmentService.getQrCodeDTO(identificationNumber,activityId).toString());
     }
+    @GetMapping("/qrcode/sendEmail")
+    public void sendEmail(@RequestParam String identificationNumber, @RequestParam Long activityId) throws MessagingException {
+        HashMap<String,String> map = new HashMap<String, String>();
+        QRCodeDTO qrCodeDTO = enrollmentService.getQrCodeDTO(identificationNumber,activityId);
+        map.put("content",qrCodeDTO.toString());
+        map.put("toEmail",qrCodeDTO.getPerson().getEmail());
+        emailService.send(map,qrCodeDTO.getActivity().getName());
+    }
 
 
-        @DeleteMapping
+    @DeleteMapping
     public ResponseEntity cancelEnrollment(@RequestParam String identificationNumber,@RequestParam Long activityId){
         try{
             enrollmentService.cancelEnrollment(new CancelEnrollmentRequst(identificationNumber,activityId));

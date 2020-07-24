@@ -12,34 +12,31 @@ class ActivityList extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			search: "",
-			page: 0,
 			size: 5,
 			total: 0,
-			sortBy: "name",
 			data: [],
 		};
 	}
 
-	handleSearchChange = async (event) => {
+	handleOrderByChange = async (event) => {
 		let { name } = event.target;
-		await this.setState({ sortBy: name, page: 0 });
-		this.getActivities();
+		this.getActivities(this.state.page, name, this.state.search);
 	};
 
-	handlePageChange = async (pageNumber) => {
+	handlePageChange = (pageNumber) => {
 		const page = pageNumber - 1;
-		await this.setState({ page });
-		this.getActivities();
+		console.log(page);
+		this.getActivities(page, this.state.sortBy, this.state.search);
 	};
 
-	componentDidMount = async (event) => {
-		if (this.getSearchParameters()["search"])
-			await this.setState({ search: this.getSearchParameters()["search"] });
-		await this.getActivities();
+	componentDidMount = () => {
+		const search = this.getSearchParameters()["search"];
+		const sortBy = "name";
+		const page = 0;
+		this.getActivities(page, sortBy, search !== undefined ? search : "");
 	};
-	getActivities = async (event) => {
-		const { search, page, size, sortBy } = this.state;
+	getActivities = async (page, sortBy, search) => {
+		const { size } = this.state;
 		const params = {
 			search,
 			page,
@@ -50,6 +47,9 @@ class ActivityList extends React.Component {
 		this.setState({
 			data: response.data.content,
 			total: response.data.totalElements,
+			page,
+			sortBy,
+			search,
 		});
 	};
 
@@ -80,7 +80,8 @@ class ActivityList extends React.Component {
 								postPerPage={size}
 								totalPosts={total}
 								paginate={this.handlePageChange}
-								search={this.handleSearchChange}
+								orderBy={this.handleOrderByChange}
+								ordered={this.state.sortBy}
 							/>
 						</div>
 						<div>

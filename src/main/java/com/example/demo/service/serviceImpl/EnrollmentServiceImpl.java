@@ -30,7 +30,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
 
     @Override
-    public HashMap<String,String> makeEnrollment(MakeEnrollmentRequest request) {
+    public String  makeEnrollment(MakeEnrollmentRequest request) {
         Person person = isValidPerson(request.getIdentificationNumber());
         Activity activity = isValidActivity(request.getActivityId());
         isAlreadyEnroll(person.getId(),activity.getId(),"make");
@@ -58,10 +58,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
                     ActivityDTO activityDTO = modelMapper.map(activity,ActivityDTO.class);
                     activityDTO.setActivityId(request.getActivityId());
-                    HashMap<String,String> map = new HashMap<String,String>();
-                    map.put("content",new QRCodeDTO(modelMapper.map(person, PersonDTO.class),activityDTO).toString());
-                    map.put("toEmail",person.getEmail());
-                    return map;
+
+                    return "The succesfully enrolled";
                 }
                 else throw new RuntimeException("The quota is full");
             }else throw new RuntimeException("All questions must be answered");

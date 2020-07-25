@@ -6,3 +6,10 @@
 	box-shadow: 5px 10px 8px #888888;
 	position: relative;
 }
+.mybg {
+	background-image: url("https://kommunity.com/img/covers/hero-3.jpg");
+	background-size: cover;
+	background-position-x: center;
+	background-position-y: center;
+	height: 100vh;
+}

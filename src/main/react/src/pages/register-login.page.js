@@ -9,7 +9,7 @@ class RegisterLogin extends React.Component {
 	render() {
 		const form = this.props.location.search.split("=")[1];
 		return (
-			<div style={{ backgroundColor: "whitesmoke", height: "100vh" }}>
+			<div>
 				<Container style={{ width: "48%", padding: "110px" }}>
 					{form !== "forgotPassword" ? (
 						form === "register" || form === "login" ? (

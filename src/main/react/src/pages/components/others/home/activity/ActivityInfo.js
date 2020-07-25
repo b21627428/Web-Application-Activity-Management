@@ -60,7 +60,7 @@ class ActivityInfo extends React.Component {
 		}
 	};
 	truncate(str) {
-		return str.length > 100 ? str.substring(0, 90) + "..." : str;
+		return str.length > 120 ? str.substring(0, 117) + "..." : str;
 	}
 	render() {
 		const { isAlreadyEnrolled } = this.state;

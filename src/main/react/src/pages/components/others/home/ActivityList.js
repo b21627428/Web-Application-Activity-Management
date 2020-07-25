@@ -72,7 +72,7 @@ class ActivityList extends React.Component {
 	render() {
 		const { data, total, size } = this.state;
 		return (
-			<div className="mt-4">
+			<div className="pt-4">
 				{data.length !== 0 ? (
 					<div style={{ padding: "80px", paddingTop: "20px" }}>
 						<Pagination

@@ -66,6 +66,7 @@ export default function EnrollModal(props) {
 					color: "white",
 					border: "0px",
 				}}
+				className="ml-4"
 				onClick={handleOpen}
 			>
 				ENROLL

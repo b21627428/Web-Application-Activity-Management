@@ -56,7 +56,7 @@ export default function QrCodeModal(props) {
 			<Button
 				style={{
 					border: "0",
-					backgroundColor: "black",
+					backgroundColor: "#343A40",
 					color: "white",
 					position: "static",
 					marginLeft: "5px",

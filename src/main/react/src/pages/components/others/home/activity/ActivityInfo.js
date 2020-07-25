@@ -59,87 +59,100 @@ class ActivityInfo extends React.Component {
 			this.setState({ isAlreadyEnrolled: false });
 		}
 	};
+	truncate(str) {
+		return str.length > 100 ? str.substring(0, 90) + "..." : str;
+	}
 	render() {
 		const { isAlreadyEnrolled } = this.state;
-		const { data, index } = this.props;
-		const backgroundColor = index % 2 === 0 ? "#7f7882" : "#566e65";
+		const { data } = this.props;
+
 		return (
-			<div>
-				<Card
-					className={styles.card_shadow}
+			<Card
+				style={{
+					width: "450px",
+				}}
+				className={styles.card_shadow}
+			>
+				<CardHeader
 					style={{
-						backgroundColor,
-						width: "450px",
+						backgroundColor: "#343A40",
+						color: "#e3e3e3",
+						height: "100px",
 					}}
-				>
-					<Card
+					avatar={
+						<Avatar
+							style={{
+								backgroundColor: "white",
+								color: "black",
+								position: "static",
+							}}
+						>
+							{data.name[0]}
+						</Avatar>
+					}
+					title={
+						<strong style={{ fontSize: "16px" }}>
+							{this.truncate(data.name)}
+						</strong>
+					}
+				/>
+
+				<CardMedia>
+					<img
 						style={{
-							backgroundColor: "#350039",
-							color: "white",
+							height: "200px",
+							backgroundSize: "cover",
+							overflow: "hidden",
+							textOverflow: "ellipsis",
 						}}
-						className="mb-3"
-					>
-						<CardHeader
-							avatar={
-								<Avatar
-									aria-label="recipe"
-									style={{
-										backgroundColor: "white",
-										color: "black",
-										position: "static",
-									}}
-								>
-									{data.name[0]}
-								</Avatar>
-							}
-							title={
-								<strong style={{ fontSize: "15px", color: "#e3e3e3" }}>
-									{data.name}
-								</strong>
-							}
-						/>
-					</Card>
-
-					<div>
-						<Card>
-							<CardMedia ttitle="Paella dish">
-								<img alt="Not Found" className="w-100" src={data.pictureUrl} />
-							</CardMedia>
+						alt="Not Found"
+						src={data.pictureUrl}
+					/>
+				</CardMedia>
+				<Card>
+					<CardContent>
+						<Card
+							style={{
+								height: "100px",
+								backgroundColor: "#e3e3e3",
+								borderRadius: "0px",
+							}}
+							className="p-3"
+						>
+							<strong>Explanation : </strong>
+							{this.truncate(data.explanation)}
 						</Card>
-
-						<div>
-							<Card className="mt-3">
-								<CardContent>
-									<div>
-										<strong>Explanation :</strong> {data.explanation}
-										<hr />
-										<strong>Start Date :</strong>{" "}
-										{data.startDate.split("T")[0] +
-											" " +
-											data.startDate.split("T")[1]}
-										<hr />
-										<strong>End Date :</strong>{" "}
-										{data.endDate.split("T")[0] +
-											" " +
-											data.endDate.split("T")[1]}
-										<hr />
-										<div>
-											<strong>Address : </strong> {data.address}
-										</div>
-									</div>
-								</CardContent>
-							</Card>
-						</div>
-					</div>
-					<Row className="ml-1 mt-3">
-						<Col style={{ position: "static" }}>
+						<Card style={{ borderRadius: "0px" }} className="p-3">
+							<strong>Start Date : </strong>{" "}
+							{data.startDate.split("T")[0] +
+								" " +
+								data.startDate.split("T")[1]}
+						</Card>
+						<Card
+							style={{ backgroundColor: "#e3e3e3", borderRadius: "0px" }}
+							className="p-3"
+						>
+							<strong>End Date :</strong>{" "}
+							{data.endDate.split("T")[0] + " " + data.endDate.split("T")[1]}
+						</Card>
+						<Card
+							style={{ height: "100px", borderRadius: "0px" }}
+							className="p-3"
+						>
+							<strong>Address : </strong> {this.truncate(data.address)}
+						</Card>
+					</CardContent>
+				</Card>
+				<Card style={{ backgroundColor: "#e3e3e3" }} className="p-3">
+					<Row>
+						<Col>
 							{data.isActive !== true ? (
 								<Button
 									style={{
 										backgroundColor: "darkblue",
 										color: "white",
-										position: "static",
 									}}
+									className="ml-4"
 									disabled={true}
 								>
 									Not Active
@@ -150,9 +163,8 @@ class ActivityInfo extends React.Component {
 										style={{
 											backgroundColor: "darkred",
 											color: "white",
-											position: "static",
-											border: "",
 										}}
+										className="ml-5"
 										onClick={this.cancel}
 									>
 										Cancel
@@ -173,7 +185,7 @@ class ActivityInfo extends React.Component {
 						</Col>
 					</Row>
 				</Card>
-			</div>
+			</Card>
 		);
 	}
 }

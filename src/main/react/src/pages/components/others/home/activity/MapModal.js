@@ -59,7 +59,7 @@ export default function MapModal(props) {
 		<div>
 			<Button
 				style={{
-					backgroundColor: "black",
+					backgroundColor: "#343A40",
 					color: "white",
 					border: "0px",
 				}}

@@ -6,13 +6,13 @@ import ActivityInfo from "./activity/ActivityInfo";
 
 import { Pagination } from "./Pagination";
 
-import { Card } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 
 class ActivityList extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			size: 5,
+			size: 4,
 			total: 0,
 			data: [],
 		};
@@ -31,7 +31,7 @@ class ActivityList extends React.Component {
 
 	componentDidMount = () => {
 		const search = this.getSearchParameters()["search"];
-		const sortBy = "name";
+		const sortBy = "startDate";
 		const page = 0;
 		this.getActivities(page, sortBy, search !== undefined ? search : "");
 	};
@@ -72,32 +72,23 @@ class ActivityList extends React.Component {
 	render() {
 		const { data, total, size } = this.state;
 		return (
-			<div>
+			<div className="mt-4">
 				{data.length !== 0 ? (
-					<div className="p-5 mx-5 ">
-						<div>
-							<Pagination
-								postPerPage={size}
-								totalPosts={total}
-								paginate={this.handlePageChange}
-								orderBy={this.handleOrderByChange}
-								ordered={this.state.sortBy}
-							/>
-						</div>
-						<div>
-							{data.map((row, index) => (
-								<span
-									style={{
-										width: "370px",
-										height: "auto",
-										display: "inline-block",
-									}}
-									key={row.activityId}
-								>
-									<ActivityInfo data={row} index={index} />
-								</span>
+					<div style={{ padding: "80px", paddingTop: "20px" }}>
+						<Pagination
+							postPerPage={size}
+							totalPosts={total}
+							paginate={this.handlePageChange}
+							orderBy={this.handleOrderByChange}
+							ordered={this.state.sortBy}
+						/>
+						<Row>
+							{data.map((row) => (
+								<Col className="col-3">
+									<ActivityInfo data={row} />
+								</Col>
 							))}
-						</div>
+						</Row>
 					</div>
 				) : (
 					<Card

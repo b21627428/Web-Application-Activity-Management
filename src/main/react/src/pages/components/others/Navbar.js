@@ -84,7 +84,7 @@ class Header extends React.Component {
 				</Form>
 
 				<Dropdown
-					className="m-2 ml-4"
+					className="mx-4"
 					style={{
 						backgroundColor: "darkgreen",
 						color: "white",

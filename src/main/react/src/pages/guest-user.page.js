@@ -9,12 +9,10 @@ import Navbar from "./components/others/Navbar";
 import MyFooter from "./components/others/Footer";
 import { ProtectedRoute } from "../ProtectedRoute";
 
-import styles from "./components/others/home/mystyle.module.css";
-
 class GuestUserPage extends React.Component {
 	render() {
 		return (
-			<div className={styles.mybg}>
+			<div>
 				<Navbar />
 				<Switch>
 					<Route exact path="/about" component={About}></Route>

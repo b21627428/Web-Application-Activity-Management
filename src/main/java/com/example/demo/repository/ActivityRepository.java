@@ -21,15 +21,15 @@ public interface ActivityRepository extends JpaRepository<Activity,Long> {
             "FROM Activity a WHERE a.startDate > ?1 AND lower(a.name) LIKE %?2%")
     Page<ActivityDTO> getActivities(LocalDateTime now, String search,PageRequest pageRequest);
 
-    /*
-    @Query("SELECT new com.example.demo.dto.activity.ActivityDTO(a.id,a.name,a.startDate,a.endDate,a.quota,a.pictureUrl,a.isActive,a.address,a.explanation) " +
-            "FROM Activity a ")
-    Page<ActivityDTO> getActivities(PageRequest pageRequest);
 
-    @Query("SELECT new com.example.demo.dto.activity.ActivityDTO(a.id,a.name,a.startDate,a.endDate,a.quota,a.pictureUrl,a.isActive,a.address,a.explanation) " +
+    @Query("SELECT a " +
+            "FROM Activity a ")
+    Page<Activity> getActivities(PageRequest pageRequest);
+
+    @Query("SELECT a " +
             "FROM Activity a WHERE lower(a.name) LIKE %?1%")
-    Page<ActivityDTO> getActivities(String search,PageRequest pageRequest);
-       */
+    Page<Activity> getActivities(String search,PageRequest pageRequest);
+
 
 
 

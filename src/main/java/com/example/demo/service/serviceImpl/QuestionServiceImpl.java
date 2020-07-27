@@ -11,6 +11,7 @@ import com.example.demo.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Service
@@ -28,6 +29,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void addQuestion(AddQuestionDTO addQuestionDTO) {
         Activity activity = activityRepository.findById(addQuestionDTO.getActivityId()).get();
+        if(activity.getStartDate().isBefore(LocalDateTime.now())) throw new RuntimeException("The activity in the past can not update");
         Question question = questionRepository.save(new Question(addQuestionDTO.getText(),Set.of()));
         activity.getAskedQuestions().add(question);
         activityRepository.save(activity);
@@ -35,6 +37,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void deleteQuestion(Long id) {
+        Activity activity = activityRepository.findById(questionRepository.getActivityId(id)).get();
+        if(activity.getStartDate().isBefore(LocalDateTime.now())) throw new RuntimeException("The activity in the past can not update");
         questionRepository.deleteById(id);
     }
 

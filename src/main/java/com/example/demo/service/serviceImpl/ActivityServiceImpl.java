@@ -54,13 +54,14 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public void deleteActivity(long parseLong) {
         Activity old = activityRepository.findById(parseLong).get();
-        if(old.getStartDate().isBefore(LocalDateTime.now())) throw new RuntimeException("The activity in the past can not update");
+        if(old.getStartDate().isBefore(LocalDateTime.now())) throw new RuntimeException("The activity in the past can not delete");
         activityRepository.deleteById(parseLong);
     }
 
     @Override
     public void changeActive(long parseLong,Boolean did) {
         Activity old = activityRepository.findById(parseLong).get();
+        if(old.getStartDate().isBefore(LocalDateTime.now())) throw new RuntimeException("The activity in the past can not active");
         old.setIsActive(did);
         activityRepository.save(old);
     }

@@ -44,9 +44,9 @@ public class ActivityController {
         activityService.deleteActivity(Long.parseLong(id));
         return ResponseEntity.ok("The activity deleted...");
     }
-    @PutMapping("/")
-    public ResponseEntity doActive(@RequestParam String id, @RequestParam Boolean did){
-        activityService.changeActive(Long.parseLong(id),did);
+    @PutMapping("/change")
+    public ResponseEntity changeActive(@RequestParam Long id, @RequestParam Boolean did){
+        activityService.changeActive(id,did);
         return ResponseEntity.ok("The activity is active..");
     }
 

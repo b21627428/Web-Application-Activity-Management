@@ -7,71 +7,80 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 
 import { Row, Col } from "react-bootstrap";
-// import "primereact/resources/themes/nova-light/theme.css";
-// import "primereact/resources/primereact.min.css";
-// import "primeicons/primeicons.css";
 
-import EnrollModal from "./EnrollModal";
-import MapModal from "./MapModal";
-import QrCodeModal from "./QrCodeModal";
+import styles from "../../others/home/mystyle.module.css";
 
-import styles from "../mystyle.module.css";
+import ViewModal from "./ViewModal";
 
-import { checkEnrollment } from "../../../../../api/apiCalls";
-import { cancelEnrollment } from "../../../../../api/apiCalls";
+import { deleteActivity } from "../../../../api/apiCalls";
+import { changeActivity } from "../../../../api/apiCalls";
+import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
-class ActivityInfo extends React.Component {
+class ActivityCard extends React.Component {
 	constructor() {
 		super();
-		this.state = {};
+		this.state = {
+			isActive: false,
+		};
 	}
 
-	cancel = async (event) => {
-		const r = await window.confirm("Do you really want to cancel enrollment?");
+	onDelete = async (event) => {
+		const r = await window.confirm("Do you really want to delete activity?");
 		if (r === true) {
 			try {
-				await cancelEnrollment(this.getParams());
-				this.changeAlreadyEnrolled(false);
-			} catch (error) {}
+				await deleteActivity(this.props.data.id);
+				alert("Sucessfuly deleted..");
+				window.location.reload();
+			} catch (error) {
+				try {
+					alert(error.response.data.message);
+				} catch (error2) {
+					alert("Connection failed");
+				}
+			}
 		}
 	};
 
-	changeAlreadyEnrolled = (value) => {
-		this.setState({ isAlreadyEnrolled: value });
-	};
-
-	getParams = () => {
-		const { activityId } = this.props.data;
-		const identificationNumber = JSON.parse(localStorage.getItem("user")).sub;
-		const params = {
-			identificationNumber,
-			activityId,
-		};
-		return params;
+	changeActive = async (event) => {
+		const r = await window.confirm(
+			"Do you really want to change active situation?"
+		);
+		const { isActive } = this.state;
+		const { id } = this.props.data;
+		if (r === true) {
+			try {
+				const params = {
+					id,
+					did: !isActive,
+				};
+				await changeActivity(params);
+				isActive = !isActive;
+			} catch (error) {
+				try {
+					alert(error.response.data.message);
+				} catch (error2) {
+					alert("Connection failed");
+				}
+			} finally {
+				this.setState({ isActive });
+			}
+		} else {
+			this.setState({ isActive });
+		}
 	};
 	componentDidMount = async (event) => {
-		try {
-			if (localStorage.getItem("user")) {
-				const response = await checkEnrollment(this.getParams());
-				this.setState({ isAlreadyEnrolled: response.data });
-			} else this.setState({ isAlreadyEnrolled: false });
-		} catch (error) {
-			this.setState({ isAlreadyEnrolled: false });
-		}
+		this.setState({ isActive: this.props.data.isActive });
 	};
 	truncate(str) {
-		return str !== null && str.length > 120
-			? str.substring(0, 117) + "..."
-			: str;
+		return str !== null && str.length > 80 ? str.substring(0, 77) + "..." : str;
 	}
 	render() {
-		const { isAlreadyEnrolled } = this.state;
 		const { data } = this.props;
 
 		return (
 			<Card
 				style={{
-					width: "450px",
+					width: "350px",
 				}}
 				className={styles.card_shadow}
 			>
@@ -102,6 +111,8 @@ class ActivityInfo extends React.Component {
 				<CardMedia>
 					<img
 						style={{
+							width: "350px",
+
 							height: "200px",
 							backgroundSize: "cover",
 							overflow: "hidden",
@@ -148,42 +159,30 @@ class ActivityInfo extends React.Component {
 				<Card style={{ backgroundColor: "#e3e3e3" }} className="p-3">
 					<Row>
 						<Col>
-							{data.isActive !== true ? (
+							<BootstrapSwitchButton
+								checked={this.state.isActive}
+								onlabel="Active"
+								onstyle="success"
+								offlabel="Not Active"
+								offstyle="info"
+								style="w-75"
+								onChange={this.changeActive}
+							/>
+						</Col>
+						<Col>
+							<Row>
+								<ViewModal data={data} />
 								<Button
 									style={{
-										backgroundColor: "darkblue",
+										backgroundColor: "darkred",
 										color: "white",
 									}}
-									className="ml-4"
-									disabled={true}
+									className="ml-2"
+									onClick={this.onDelete}
 								>
-									Not Active
+									DELETE
 								</Button>
-							) : isAlreadyEnrolled === true ? (
-								<Row>
-									<Button
-										style={{
-											backgroundColor: "darkred",
-											color: "white",
-										}}
-										className="ml-5"
-										onClick={this.cancel}
-									>
-										Cancel
-									</Button>
-
-									<QrCodeModal getParams={this.getParams} />
-								</Row>
-							) : (
-								<EnrollModal
-									changeAlreadyEnrolled={this.changeAlreadyEnrolled}
-									data={data}
-									getParams={this.getParams}
-								/>
-							)}
-						</Col>
-						<Col style={{ position: "static" }}>
-							<MapModal data={data} />
+							</Row>
 						</Col>
 					</Row>
 				</Card>
@@ -191,4 +190,4 @@ class ActivityInfo extends React.Component {
 		);
 	}
 }
-export default ActivityInfo;
+export default ActivityCard;

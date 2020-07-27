@@ -29,8 +29,9 @@ export const Pagination = ({
 						<Link
 							to=""
 							style={{
-								backgroundColor: "#e3e3e3",
-								color: "black",
+								backgroundColor: "#343A40",
+								color: "#e3e3e3",
+								fontSize: "16px",
 							}}
 							onClick={() => paginate(number)}
 							className="page-link"
@@ -59,7 +60,7 @@ export const Pagination = ({
 					</Dropdown.Item>
 				</DropdownButton>
 				<CreateModal />
-				<Form inline className="ml-auto">
+				<Form inline className="ml-auto mr-5">
 					<FormControl
 						type="text"
 						placeholder="Search"

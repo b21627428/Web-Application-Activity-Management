@@ -2,7 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
+
+import CreateUpdateForm from "./CreateUpdateForm";
 
 function getModalStyle() {
 	const top = 50;
@@ -18,9 +20,10 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
 	paper: {
 		position: "absolute",
-		width: "70%",
+		width: "90%",
 		height: "90%",
-		backgroundColor: theme.palette.background.paper,
+		backgroundColor: "#343A40",
+		color: "white",
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
 	},
@@ -31,7 +34,6 @@ export default function ViewModal(props) {
 	// getModalStyle is not a pure function, we roll the style only on the first render
 	const [modalStyle] = React.useState(getModalStyle);
 	const [open, setOpen] = React.useState(false);
-	const { data } = props;
 
 	const handleOpen = () => {
 		setOpen(true);
@@ -42,18 +44,27 @@ export default function ViewModal(props) {
 	};
 	const body = (
 		<div style={modalStyle} className={classes.paper}>
-			<div className="p-3">
-				<h2 id="simple-modal-title">{data.name}</h2>
+			<div className="p-3" style={{ height: "100%" }}>
 				<div id="simple-modal-description">
-					{/* <EnrollContainer
-						handleClose={handleClose}
-						data={data}
-					/> */}
+					<Row>
+						<Col style={{ fontSize: "21px" }}>{props.data.name}</Col>
+						<Col xs lg="1">
+							<Button>Report</Button>
+						</Col>
+					</Row>
+					<Row style={{ backgroundColor: "#e3e3e3" }} className="mt-5">
+						<Col>
+							{/* <input type="text" placeholder={props.data.name} /> */}
+							<CreateUpdateForm data={props.data} />
+						</Col>
+						<Col xs lg="3" style={{ color: "black" }}>
+							Questions
+						</Col>
+					</Row>
 				</div>
 			</div>
 		</div>
 	);
-
 	return (
 		<div>
 			<Button

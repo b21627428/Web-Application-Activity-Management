@@ -87,7 +87,13 @@ class Activities extends React.Component {
 		return (
 			<div className="mt-3">
 				{data.length !== 0 ? (
-					<div style={{ padding: "80px", paddingTop: "20px" }}>
+					<div
+						style={{
+							paddingLeft: "80px",
+							paddingRigh: "80px",
+							paddingTop: "20px",
+						}}
+					>
 						<Pagination
 							postPerPage={size}
 							totalPosts={total}
@@ -117,7 +123,7 @@ class Activities extends React.Component {
 						</Button>
 						<Card
 							className="p-5 mx-5 my-3 shadow"
-							style={{ backgroundColor: "#e3e3e3" }}
+							style={{ backgroundColor: "darkgray" }}
 						>
 							Not found ...
 						</Card>

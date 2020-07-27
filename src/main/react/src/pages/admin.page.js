@@ -11,17 +11,24 @@ import Dashboard from "./components/admin/Dashboard";
 class AdminPage extends React.Component {
 	render() {
 		return (
-			<Router>
-				<AdminNavbar />
-				<Menu />
-				<div style={{ marginLeft: "250px" }}>
-					<Switch>
-						<Route path="/dashboard" component={Dashboard} />
-						<Route path="/users" component={Users} />
-						<Route path="/" component={Activities} />
-					</Switch>
-				</div>
-			</Router>
+			<div
+				style={{
+					backgroundColor: "#e3e3e3",
+					height: "100vh",
+				}}
+			>
+				<Router>
+					<AdminNavbar />
+					<Menu />
+					<div style={{ marginLeft: "250px" }}>
+						<Switch>
+							<Route path="/dashboard" component={Dashboard} />
+							<Route path="/users" component={Users} />
+							<Route path="/" component={Activities} />
+						</Switch>
+					</div>
+				</Router>
+			</div>
 		);
 	}
 }

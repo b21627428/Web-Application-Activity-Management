@@ -71,7 +71,7 @@ class ActivityInfo extends React.Component {
 		return (
 			<Card
 				style={{
-					width: "450px",
+					width: "400px",
 				}}
 				className={styles.card_shadow}
 			>
@@ -79,7 +79,7 @@ class ActivityInfo extends React.Component {
 					style={{
 						backgroundColor: "#343A40",
 						color: "#e3e3e3",
-						height: "100px",
+						height: "150px",
 					}}
 					avatar={
 						<Avatar

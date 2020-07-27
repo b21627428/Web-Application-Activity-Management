@@ -9,19 +9,20 @@ class Menu extends React.Component {
 				className="w3-sidebar w3-bar-block p-3"
 				style={{ backgroundColor: "darkgray", color: "white", width: "250px" }}
 			>
-				<Link
-					to="/dashboard"
-					style={{ backgroundColor: "#e3e3e3", color: "black" }}
-					className="w3-bar-item w3-button"
-				>
-					Dashboard
-				</Link>
+				{" "}
 				<Link
 					to="/"
 					style={{ backgroundColor: "#e3e3e3", color: "black" }}
 					className="w3-bar-item w3-button"
 				>
 					Activites
+				</Link>
+				<Link
+					to="/dashboard"
+					style={{ backgroundColor: "#e3e3e3", color: "black" }}
+					className="w3-bar-item w3-button"
+				>
+					Dashboard
 				</Link>
 				<Link
 					to="/users"

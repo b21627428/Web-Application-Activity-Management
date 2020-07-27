@@ -45,7 +45,7 @@ class ActivityCard extends React.Component {
 		const r = await window.confirm(
 			"Do you really want to change active situation?"
 		);
-		const { isActive } = this.state;
+		let { isActive } = this.state;
 		const { id } = this.props.data;
 		if (r === true) {
 			try {
@@ -156,15 +156,15 @@ class ActivityCard extends React.Component {
 						</Card>
 					</CardContent>
 				</Card>
-				<Card style={{ backgroundColor: "#e3e3e3" }} className="p-3">
+				<Card style={{ backgroundColor: "darkgray" }} className="p-3">
 					<Row>
 						<Col>
 							<BootstrapSwitchButton
 								checked={this.state.isActive}
 								onlabel="Active"
-								onstyle="success"
+								onstyle="info"
 								offlabel="Not Active"
-								offstyle="info"
+								offstyle="secondary"
 								style="w-75"
 								onChange={this.changeActive}
 							/>

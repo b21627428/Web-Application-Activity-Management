@@ -5,6 +5,8 @@ import Modal from "@material-ui/core/Modal";
 import { Button } from "react-bootstrap";
 import AddIcon from "@material-ui/icons/Add";
 
+import CreateUpdateForm from "./CreateUpdateForm";
+
 function getModalStyle() {
 	const top = 50;
 	const left = 50;
@@ -21,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
 		position: "absolute",
 		width: "70%",
 		height: "90%",
-		backgroundColor: theme.palette.background.paper,
+		backgroundColor: "#343A40",
+		color: "white",
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
 	},
@@ -32,7 +35,6 @@ export default function CreateModal(props) {
 	// getModalStyle is not a pure function, we roll the style only on the first render
 	const [modalStyle] = React.useState(getModalStyle);
 	const [open, setOpen] = React.useState(false);
-	const { data } = props;
 
 	const handleOpen = () => {
 		setOpen(true);
@@ -44,12 +46,8 @@ export default function CreateModal(props) {
 	const body = (
 		<div style={modalStyle} className={classes.paper}>
 			<div className="p-3">
-				<h2 id="simple-modal-title"></h2>
 				<div id="simple-modal-description">
-					{/* <EnrollContainer
-						handleClose={handleClose}
-						data={data}
-					/> */}
+					<CreateUpdateForm />
 				</div>
 			</div>
 		</div>

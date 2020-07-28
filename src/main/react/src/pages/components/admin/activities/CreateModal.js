@@ -2,10 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 
+import MaterialButton from "@material-ui/core/Button";
 import { Button } from "react-bootstrap";
 import AddIcon from "@material-ui/icons/Add";
 
-import CreateUpdateForm from "./CreateUpdateForm";
+import CreateContainer from "./CreateContainer";
+import Map from "../Map";
 
 function getModalStyle() {
 	const top = 50;
@@ -21,12 +23,9 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
 	paper: {
 		position: "absolute",
-		width: "70%",
-		height: "90%",
-		backgroundColor: "#343A40",
-		color: "white",
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
+		width: "75%",
+		height: "85%",
+		backgroundColor: "#e3e3e3",
 	},
 }));
 
@@ -43,12 +42,41 @@ export default function CreateModal(props) {
 	const handleClose = () => {
 		setOpen(false);
 	};
+
+	const create = () => {};
 	const body = (
 		<div style={modalStyle} className={classes.paper}>
-			<div className="p-3">
-				<div id="simple-modal-description">
-					<CreateUpdateForm />
-				</div>
+			<CreateContainer />
+
+			<div>
+				<Map
+					google={props.google}
+					center={{
+						lat: 39.907,
+						lng: 32.8,
+						address: "",
+					}}
+					height="300px"
+					zoom={15}
+				/>
+			</div>
+			<div
+				style={{
+					backgroundColor: "darkgray",
+					marginTop: "100px",
+					paddingLeft: "50px",
+				}}
+			>
+				<MaterialButton
+					style={{
+						backgroundColor: "darkred",
+						color: "white",
+						border: "0px",
+						margin: "20px",
+					}}
+				>
+					Create
+				</MaterialButton>
 			</div>
 		</div>
 	);

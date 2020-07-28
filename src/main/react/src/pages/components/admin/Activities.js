@@ -2,8 +2,10 @@ import React from "react";
 import { listActivitiesForAdmin } from "../../../api/apiCalls";
 import { Pagination } from "./activities/Pagination";
 import ActivityCard from "./activities/ActivityCard";
+import CreateUpdateForm from "./activities/CreateContainer";
 
 import { Row, Col, Card, Button } from "react-bootstrap";
+import CreateContainer from "./activities/CreateContainer";
 class Activities extends React.Component {
 	constructor() {
 		super();

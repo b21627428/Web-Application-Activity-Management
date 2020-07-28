@@ -14,7 +14,7 @@ import ViewModal from "./ViewModal";
 
 import { deleteActivity } from "../../../../api/apiCalls";
 import { changeActivity } from "../../../../api/apiCalls";
-import BootstrapSwitchButton from "bootstrap-switch-button-react";
+// import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
 class ActivityCard extends React.Component {
 	constructor() {
@@ -159,7 +159,7 @@ class ActivityCard extends React.Component {
 				<Card style={{ backgroundColor: "darkgray" }} className="p-3">
 					<Row>
 						<Col>
-							<BootstrapSwitchButton
+							{/* <BootstrapSwitchButton
 								checked={this.state.isActive}
 								onlabel="Active"
 								onstyle="info"
@@ -167,7 +167,7 @@ class ActivityCard extends React.Component {
 								offstyle="secondary"
 								style="w-75"
 								onChange={this.changeActive}
-							/>
+							/> */}
 						</Col>
 						<Col>
 							<Row>

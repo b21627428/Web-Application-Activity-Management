@@ -2,7 +2,7 @@ import React from "react";
 import { Form } from "react-bootstrap";
 
 export const Input = (props) => {
-	const { placeholder, error, name, onChange, type, label } = props;
+	const { placeholder, error, name, onChange, type, label, value } = props;
 	const className = error
 		? "form-control is-invalid shadow p-4"
 		: "form-control shadow p-4";
@@ -16,6 +16,7 @@ export const Input = (props) => {
 					type={type}
 					placeholder={placeholder}
 					className={className}
+					value={value}
 				/>
 			</Form.Group>
 		</div>

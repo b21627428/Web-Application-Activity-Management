@@ -80,7 +80,7 @@ class ActivityCard extends React.Component {
 		return (
 			<Card
 				style={{
-					width: "350px",
+					width: "400px",
 				}}
 				className={styles.card_shadow}
 			>

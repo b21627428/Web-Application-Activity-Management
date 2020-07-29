@@ -9,6 +9,8 @@ import {
 import Autocomplete from "react-google-autocomplete";
 import axios from "axios";
 import Geocode from "react-geocode";
+import { Row, Col } from "react-bootstrap";
+
 Geocode.setApiKey(process.env.REACT_APP_GOOGLEKEY);
 Geocode.enableDebug();
 class Map extends React.Component {
@@ -125,9 +127,6 @@ class Map extends React.Component {
 							height: "40px",
 							paddingLeft: "16px",
 							marginTop: "2px",
-							marginBottom: "100px",
-							position: "relative",
-							zIndex: 2,
 						}}
 						onPlaceSelected={this.onPlaceSelected}
 						types={["(regions)"]}
@@ -139,19 +138,46 @@ class Map extends React.Component {
 		let map;
 		if (this.props.center.lat !== undefined) {
 			map = (
-				<div className="m-5">
+				<div className="mx-5 mt-3">
 					<div>
-						<div className="form-group">
-							<label htmlFor="">Address</label>
-							<input
-								type="text"
-								name="address"
-								className="form-control"
-								onChange={this.onChange}
-								readOnly="readOnly"
-								value={this.state.address}
-							/>
-						</div>
+						<Row className="form-group">
+							<Col>
+								<label htmlFor="">Address</label>
+								<input
+									id="address"
+									type="text"
+									name="address"
+									className="form-control"
+									onChange={this.onChange}
+									readOnly="readOnly"
+									value={this.state.address}
+								/>
+							</Col>
+							<Col xs lg="2">
+								<label htmlFor="">Lat</label>
+								<input
+									id="lat"
+									type="text"
+									name="lat"
+									className="form-control"
+									onChange={this.onChange}
+									readOnly="readOnly"
+									value={this.state.lat}
+								/>
+							</Col>
+							<Col xs lg="2">
+								<label htmlFor="">Long</label>
+								<input
+									id="lng"
+									type="text"
+									name="lng"
+									className="form-control"
+									onChange={this.onChange}
+									readOnly="readOnly"
+									value={this.state.lng}
+								/>
+							</Col>
+						</Row>
 					</div>
 
 					<AsyncMap

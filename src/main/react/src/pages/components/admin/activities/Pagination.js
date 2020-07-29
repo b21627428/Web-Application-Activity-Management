@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 import CheckIcon from "@material-ui/icons/Check";
 import SearchIcon from "@material-ui/icons/Search";
-import CreateModal from "./CreateModal";
-
+import { Button } from "react-bootstrap";
+import AddIcon from "@material-ui/icons/Add";
 export const Pagination = ({
 	postPerPage,
 	totalPosts,
@@ -59,7 +59,15 @@ export const Pagination = ({
 						{ordered === "endDate" && <CheckIcon className="ml-5" />}
 					</Dropdown.Item>
 				</DropdownButton>
-				<CreateModal />
+				<Link to="/activities/create">
+					<Button
+						className="ml-2"
+						style={{ backgroundColor: "darkgreen", border: "0px" }}
+					>
+						<AddIcon className="mr-1" />
+						Create
+					</Button>
+				</Link>
 				<Form inline className="ml-auto mr-5">
 					<FormControl
 						type="text"

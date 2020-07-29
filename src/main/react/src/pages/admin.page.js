@@ -7,6 +7,7 @@ import Activities from "./components/admin/Activities";
 import Users from "./components/admin/Users";
 import AdminNavbar from "./components/admin/AdminNavbar";
 import Dashboard from "./components/admin/Dashboard";
+import Create from "./components/admin/Create";
 
 class AdminPage extends React.Component {
 	render() {
@@ -14,7 +15,6 @@ class AdminPage extends React.Component {
 			<div
 				style={{
 					backgroundColor: "#e3e3e3",
-					height: "100vh",
 				}}
 			>
 				<Router>
@@ -24,6 +24,7 @@ class AdminPage extends React.Component {
 						<Switch>
 							<Route path="/dashboard" component={Dashboard} />
 							<Route path="/users" component={Users} />
+							<Route path="/activities/create" component={Create} />
 							<Route path="/" component={Activities} />
 						</Switch>
 					</div>

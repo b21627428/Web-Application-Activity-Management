@@ -2,10 +2,11 @@ import React from "react";
 import { listActivitiesForAdmin } from "../../../api/apiCalls";
 import { Pagination } from "./activities/Pagination";
 import ActivityCard from "./activities/ActivityCard";
-import CreateUpdateForm from "./activities/CreateContainer";
 
 import { Row, Col, Card, Button } from "react-bootstrap";
-import CreateContainer from "./activities/CreateContainer";
+import { Link } from "react-router-dom";
+
+import AddIcon from "@material-ui/icons/Add";
 class Activities extends React.Component {
 	constructor() {
 		super();
@@ -107,8 +108,8 @@ class Activities extends React.Component {
 						/>
 
 						<Row>
-							{data.map((row) => (
-								<Col className="col-3">
+							{data.map((row, index) => (
+								<Col key={index} className="col-3">
 									<ActivityCard data={row} />
 								</Col>
 							))}
@@ -118,11 +119,20 @@ class Activities extends React.Component {
 					<div>
 						<Button
 							variant="secondary"
-							className="mx-5 mt-3 shadow"
+							className="ml-5 mt-3 shadow"
 							onClick={this.clearAll}
 						>
 							Go Back
 						</Button>
+						<Link to="/activities/create">
+							<Button
+								className="ml-2 mt-3 shadow"
+								style={{ backgroundColor: "darkgreen", border: "0px" }}
+							>
+								<AddIcon className="mr-1" />
+								Create
+							</Button>
+						</Link>
 						<Card
 							className="p-5 mx-5 my-3 shadow"
 							style={{ backgroundColor: "darkgray" }}

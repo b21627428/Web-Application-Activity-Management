@@ -71,7 +71,7 @@ class ActivityInfo extends React.Component {
 		return (
 			<Card
 				style={{
-					width: "400px",
+					width: "430px",
 				}}
 				className={styles.card_shadow}
 			>

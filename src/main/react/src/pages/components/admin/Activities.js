@@ -38,6 +38,7 @@ class Activities extends React.Component {
 			size,
 			sortBy,
 		};
+		console.log(params);
 		const response = await listActivitiesForAdmin(params);
 		this.setState({
 			data: response.data.content,

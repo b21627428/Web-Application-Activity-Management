@@ -4,6 +4,9 @@ import Modal from "@material-ui/core/Modal";
 
 import { Button, Row, Col } from "react-bootstrap";
 
+import CreateUpdateForm from "../create-update/CreateUpdate";
+import QuestionList from "../create-update/QuestionList";
+
 function getModalStyle() {
 	const top = 50;
 	const left = 50;
@@ -18,8 +21,8 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
 	paper: {
 		position: "absolute",
-		width: "75%",
-		height: "720px",
+		width: "80%",
+		height: "82%",
 		backgroundColor: "#e3e3e3",
 	},
 }));
@@ -39,17 +42,14 @@ export default function ViewModal(props) {
 	};
 	const body = (
 		<div style={modalStyle} className={classes.paper}>
-			<div id="simple-modal-description">
-				{/* <Row>
-						<Col style={{ fontSize: "21px" }}>{props.data.name}</Col>
-						<Col xs lg="1">
-							<Button>Report</Button>
-						</Col>
-					</Row> */}
-				<Row style={{ backgroundColor: "#e3e3e3" }}>
-					<Col>{/* <input type="text" placeholder={props.data.name} /> */}</Col>
-				</Row>
-			</div>
+			<Row className="m-0 pb-3 pt-3">
+				<Col>
+					<CreateUpdateForm handleClose={handleClose} data={props.data} />
+				</Col>
+				<Col xs lg="3" className="ml-5">
+					<QuestionList id={props.data.id} />
+				</Col>
+			</Row>
 		</div>
 	);
 	return (
@@ -66,12 +66,7 @@ export default function ViewModal(props) {
 			>
 				VIEW
 			</Button>
-			<Modal
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="simple-modal-title"
-				aria-describedby="simple-modal-description"
-			>
+			<Modal open={open} onClose={handleClose}>
 				{body}
 			</Modal>
 		</div>

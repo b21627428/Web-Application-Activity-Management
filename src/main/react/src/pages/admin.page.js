@@ -7,7 +7,8 @@ import Activities from "./components/admin/Activities";
 import Users from "./components/admin/Users";
 import AdminNavbar from "./components/admin/AdminNavbar";
 import Dashboard from "./components/admin/Dashboard";
-import Create from "./components/admin/Create";
+import CreateUpdateForm from "./components/admin/create-update/CreateUpdate";
+import Report from "./components/admin/Report";
 
 class AdminPage extends React.Component {
 	render() {
@@ -15,6 +16,7 @@ class AdminPage extends React.Component {
 			<div
 				style={{
 					backgroundColor: "#e3e3e3",
+					height: "100vh",
 				}}
 			>
 				<Router>
@@ -24,7 +26,15 @@ class AdminPage extends React.Component {
 						<Switch>
 							<Route path="/dashboard" component={Dashboard} />
 							<Route path="/users" component={Users} />
-							<Route path="/activities/create" component={Create} />
+							<Route
+								path="/activities/create"
+								component={() => (
+									<div className="mx-5 mt-5 pb-3">
+										<CreateUpdateForm />
+									</div>
+								)}
+							/>
+							<Route path="/activities/report" component={Report} />
 							<Route path="/" component={Activities} />
 						</Switch>
 					</div>

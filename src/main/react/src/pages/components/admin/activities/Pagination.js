@@ -61,7 +61,7 @@ export const Pagination = ({
 				</DropdownButton>
 				<Link to="/activities/create">
 					<Button
-						className="ml-2"
+						className="ml-2 p-2"
 						style={{ backgroundColor: "darkgreen", border: "0px" }}
 					>
 						<AddIcon className="mr-1" />

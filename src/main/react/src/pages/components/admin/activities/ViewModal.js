@@ -46,7 +46,7 @@ export default function ViewModal(props) {
 				<Col>
 					<CreateUpdateForm handleClose={handleClose} data={props.data} />
 				</Col>
-				<Col xs lg="3" className="ml-5">
+				<Col xs lg="3">
 					<QuestionList id={props.data.id} />
 				</Col>
 			</Row>

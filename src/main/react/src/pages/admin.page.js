@@ -16,7 +16,6 @@ class AdminPage extends React.Component {
 			<div
 				style={{
 					backgroundColor: "#e3e3e3",
-					height: "100vh",
 				}}
 			>
 				<Router>
@@ -29,7 +28,7 @@ class AdminPage extends React.Component {
 							<Route
 								path="/activities/create"
 								component={() => (
-									<div className="mx-5 mt-5 pb-3">
+									<div className="mx-5 mt-4 pb-3">
 										<CreateUpdateForm />
 									</div>
 								)}

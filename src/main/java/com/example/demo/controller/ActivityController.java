@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.activity.CreateActivityDTO;
+import com.example.demo.dto.activity.ImageDTO;
 import com.example.demo.dto.activity.UpdateActivityDTO;
 import com.example.demo.service.ActivityService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class ActivityController {
     @PostMapping
     public ResponseEntity createActivity(@Valid @RequestBody CreateActivityDTO createActivityDTO){
         activityService.createActivity(createActivityDTO);
-        return ResponseEntity.ok("The activity created...");
+        return ResponseEntity.ok("Succesfully created");
 
     }
     @PutMapping
@@ -49,5 +50,6 @@ public class ActivityController {
         activityService.changeActive(id,did);
         return ResponseEntity.ok("The activity is active..");
     }
+
 
 }

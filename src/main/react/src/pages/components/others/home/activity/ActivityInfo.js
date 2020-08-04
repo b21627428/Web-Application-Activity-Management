@@ -79,7 +79,7 @@ class ActivityInfo extends React.Component {
 					style={{
 						backgroundColor: "#343A40",
 						color: "#e3e3e3",
-						height: "150px",
+						height: "100px",
 					}}
 					avatar={
 						<Avatar
@@ -102,10 +102,10 @@ class ActivityInfo extends React.Component {
 				<CardMedia>
 					<img
 						style={{
+							width: "380px",
 							height: "200px",
-							backgroundSize: "cover",
-							overflow: "hidden",
-							textOverflow: "ellipsis",
+							marginLeft: "25px",
+							marginTop: "10px",
 						}}
 						alt="Not Found"
 						src={data.pictureUrl}

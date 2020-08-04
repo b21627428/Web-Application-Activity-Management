@@ -6,11 +6,64 @@ import FormHeader from "./FormHeader";
 import FormFooter from "./FormFooter";
 import FormButton from "./FormButton";
 
+import { storage } from "../Firebase";
+
+import { createActivity } from "../../../../api/apiCalls";
+import { updateActivity } from "../../../../api/apiCalls";
+
 class CreateUpdateForm extends React.Component {
-	onCreateUpdate = () => {
+	imageUploadAndRecord = async (image, params) => {
+		var metadata = {
+			contentType: "image/jpeg",
+		};
+		var uploadTask = storage.ref(`images/${image.name}`).put(image, metadata);
+		uploadTask.on(
+			"state_changed",
+			(snapshot) => {},
+			(error) => {
+				console.log(error);
+			},
+			() => {
+				storage
+					.ref("images")
+					.child(image.name)
+					.getDownloadURL()
+					.then(async (url) => {
+						params["pictureUrl"] = url;
+						if (this.props.data) {
+							await updateActivity(params);
+							alert("Succesfully updated");
+						} else {
+							await createActivity(params);
+							alert("Succesfully created");
+						}
+						window.location.href = "/";
+					});
+			}
+		);
+	};
+	onCreateUpdate = async () => {
 		if (!this.isThereError()) {
-			const params = this.getParams();
-			console.log(params);
+			var params = this.getParams();
+			if (this.props.data) {
+				params["id"] = this.props.data.id;
+				params["pictureUrl"] = this.props.data.pictureUrl;
+			}
+			if (params["startDate"] > params["endDate"]) {
+				alert("The start date must be before end date");
+			} else {
+				var image = document.getElementById("picture").files[0];
+				if (image === undefined && !this.props.data) {
+					alert("The image must be choosen");
+				} else if (image === undefined && this.props.data) {
+					try {
+						await updateActivity(params);
+						alert("Succesfully updated");
+					} catch (error) {}
+				} else if (image !== undefined) {
+					await this.imageUploadAndRecord(image, params);
+				}
+			}
 		} else {
 			alert("All blanks must be filled.");
 		}
@@ -35,6 +88,7 @@ class CreateUpdateForm extends React.Component {
 				"quota",
 				"startDate",
 				"endDate",
+				"explanation",
 			];
 			let params = {};
 			array.map((row) => (params[row] = document.getElementById(row).value));
@@ -78,6 +132,7 @@ class CreateUpdateForm extends React.Component {
 						quota={this.props.data && this.props.data.quota}
 						startDate={this.props.data && this.props.data.startDate}
 						endDate={this.props.data && this.props.data.endDate}
+						explanation={this.props.data && this.props.data.explanation}
 					/>
 				</Card>
 				<Card style={{ backgroundColor: "darkgray" }}>

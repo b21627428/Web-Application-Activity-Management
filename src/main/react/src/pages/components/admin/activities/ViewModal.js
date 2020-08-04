@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 	paper: {
 		position: "absolute",
 		width: "80%",
-		height: "82%",
+		height: "92%",
 		backgroundColor: "#e3e3e3",
 	},
 }));

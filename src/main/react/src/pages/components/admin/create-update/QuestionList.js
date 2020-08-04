@@ -4,7 +4,6 @@ import { getAskedQuestions } from "../../../../api/apiCalls";
 import Question from "./Question";
 import { Card, Button } from "react-bootstrap";
 import AddIcon from "@material-ui/icons/Add";
-import Modal from "@material-ui/core/Modal";
 
 class QuestionList extends React.Component {
 	constructor(props) {
@@ -40,7 +39,7 @@ class QuestionList extends React.Component {
 					<AddIcon /> <strong>Add Question</strong>
 				</Button>
 				{this.state.questions.map((row) => (
-					<Question getQuestion={this.getQuestion} data={row} />
+					<Question key={row.id} getQuestion={this.getQuestion} data={row} />
 				))}
 			</Card>
 		);

@@ -38,7 +38,6 @@ class Activities extends React.Component {
 			size,
 			sortBy,
 		};
-		console.log(params);
 		const response = await listActivitiesForAdmin(params);
 		this.setState({
 			data: response.data.content,
@@ -89,7 +88,7 @@ class Activities extends React.Component {
 	render() {
 		const { data, total, size } = this.state;
 		return (
-			<div className="mt-3">
+			<div className="mt-3" style={{ height: "100vh" }}>
 				{data.length !== 0 ? (
 					<div
 						style={{

@@ -19,7 +19,7 @@ class Question extends React.Component {
 
 	render() {
 		return (
-			<Card className="p-3" style={{ boxShadow: "5px 10px 8px #888888" }}>
+			<Card className="p-3 mx-1 my-2 shadow-sm">
 				<Row>
 					<Col>{this.props.data.text}</Col>
 					<Col xs lg="2" className="mr-5">

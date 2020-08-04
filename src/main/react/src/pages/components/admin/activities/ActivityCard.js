@@ -112,12 +112,9 @@ class ActivityCard extends React.Component {
 				<CardMedia>
 					<img
 						style={{
-							width: "350px",
-
-							height: "200px",
-							backgroundSize: "cover",
-							overflow: "hidden",
-							textOverflow: "ellipsis",
+							width: "370px",
+							height: "250px",
+							margin: "15px",
 						}}
 						alt="Not Found"
 						src={data.pictureUrl}

@@ -20,23 +20,17 @@ class FormHeader extends React.Component {
 	render() {
 		return (
 			<CardHeader
-				style={{
-					backgroundColor: "#343A40",
-					color: "#e3e3e3",
-					height: "100px",
-				}}
+				className="bg-secondary"
 				title={
-					<Form.Group>
-						<Form.Control
-							id="name"
-							name="name"
-							type="text"
-							placeholder="Enter name"
-							onChange={this.onChange}
-							value={this.state.name || ""}
-							className="p-4"
-						/>
-					</Form.Group>
+					<Form.Control
+						id="name"
+						name="name"
+						type="text"
+						placeholder="Enter event title"
+						onChange={this.onChange}
+						value={this.state.name || ""}
+						className="border-0 font-weight-bold"
+					/>
 				}
 			/>
 		);

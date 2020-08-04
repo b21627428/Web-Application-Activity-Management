@@ -2,6 +2,7 @@ package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dto.activity.ActivityDTO;
 import com.example.demo.dto.activity.CreateActivityDTO;
+import com.example.demo.dto.activity.ImageDTO;
 import com.example.demo.dto.activity.UpdateActivityDTO;
 import com.example.demo.model.Activity;
 import com.example.demo.repository.ActivityRepository;
@@ -63,6 +64,13 @@ public class ActivityServiceImpl implements ActivityService {
         Activity old = activityRepository.findById(parseLong).get();
         if(old.getStartDate().isBefore(LocalDateTime.now())) throw new RuntimeException("The activity in the past can not active");
         old.setIsActive(did);
+        activityRepository.save(old);
+    }
+
+    @Override
+    public void updateImage(ImageDTO imageDTO) {
+        Activity old = activityRepository.findById(imageDTO.getId()).get();
+        old.setPictureUrl(imageDTO.getPictureUrl());
         activityRepository.save(old);
     }
 }

@@ -2,8 +2,8 @@ import React from "react";
 
 import { getAskedQuestions } from "../../../../api/apiCalls";
 import Question from "./Question";
-import { Card, Button } from "react-bootstrap";
-import AddIcon from "@material-ui/icons/Add";
+import { Card } from "react-bootstrap";
+import QuestionModal from "./QuestionModal";
 
 class QuestionList extends React.Component {
 	constructor(props) {
@@ -35,9 +35,7 @@ class QuestionList extends React.Component {
 					height: "100%",
 				}}
 			>
-				<Button style={{ backgroundColor: "darkblue" }} className="p-3">
-					<AddIcon /> <strong>Add Question</strong>
-				</Button>
+				<QuestionModal id={this.props.id} getQuestion={this.getQuestion} />
 				{this.state.questions.map((row) => (
 					<Question key={row.id} getQuestion={this.getQuestion} data={row} />
 				))}

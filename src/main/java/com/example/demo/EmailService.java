@@ -1,17 +1,20 @@
 package com.example.demo;
 
+import com.sun.istack.ByteArrayDataSource;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Component;
-
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.sql.DataSource;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -51,10 +54,27 @@ public class EmailService {
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO,new InternetAddress(toEmail));
             message.setSubject("Qr Code for "+activityName);
-            String htmlText =
-                    String.format("<div>Your Qr Code is below for activity.<hr/><img alt='Can not create' style='width:500px;height:500px' src='data:image/png;base64,%s'/></div>", qrCodeGenerator.create(content));
-            System.out.println(htmlText);
-            message.setContent(htmlText,"text/html");
+
+           MimeMultipart emailContent = new MimeMultipart("related");
+
+           MimeBodyPart textBodyPart = new MimeBodyPart();
+           textBodyPart.setText("Your Qr Code is below and you need to show it when entering the activity.");
+           emailContent.addBodyPart(textBodyPart);
+
+            MimeBodyPart attachmentPart = new MimeBodyPart();
+            attachmentPart.setFileName("qr code");
+            attachmentPart.setDisposition(Part.ATTACHMENT);
+            DataSource src = new ByteArrayDataSource(qrCodeGenerator.createImage(content).toByteArray(),"application/pdf");
+            DataHandler handler = new DataHandler(src);
+            attachmentPart.setDataHandler(handler);
+            emailContent.addBodyPart(attachmentPart);
+
+           message.setContent(emailContent);
+//            String htmlText =
+//                    String.format("<div>Your Qr Code is below for activity.<hr/><img alt='Can not create' style='width:500px;height:500px' src='data:image/png;base64,%s'/></div>", qrCodeGenerator.create(content));
+//            System.out.println(htmlText);
+//            System.out.println(htmlText);
+//            message.setContent(htmlText,"text/html");
             return message;
         } catch (Exception e) {
             e.printStackTrace();

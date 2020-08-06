@@ -21,7 +21,7 @@ class AdminPage extends React.Component {
 				<Router>
 					<AdminNavbar />
 					<Menu />
-					<div style={{ marginLeft: "250px" }}>
+					<div style={{ marginLeft: "250px", height: "100vh" }}>
 						<Switch>
 							<Route path="/dashboard" component={Dashboard} />
 							<Route path="/users" component={Users} />

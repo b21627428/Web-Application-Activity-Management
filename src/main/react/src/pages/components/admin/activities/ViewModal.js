@@ -43,7 +43,7 @@ export default function ViewModal(props) {
 	const body = (
 		<div style={modalStyle} className={classes.paper}>
 			<Row className="m-0 pb-3 pt-3">
-				<Col>
+				<Col className="h-100">
 					<CreateUpdateForm handleClose={handleClose} data={props.data} />
 				</Col>
 				<Col xs lg="3">

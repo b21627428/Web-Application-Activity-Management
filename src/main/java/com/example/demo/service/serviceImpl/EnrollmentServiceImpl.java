@@ -37,8 +37,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         if(activity.getIsActive() == true){
             if(activity.getAskedQuestions().size() == request.getGivenAnswers().size()){
                 if(enrollmentRepository.countByActivityId(activity.getId()) != activity.getQuota() ){
-
-                    Enrollment enrollment = enrollmentRepository.save(new Enrollment(LocalDateTime.now(),new ArrayList<>()));
+                    Enrollment enrollment = enrollmentRepository.save(new Enrollment(LocalDateTime.now(),                    LocalDateTime.now().getDayOfWeek().getValue()
+                    ,new ArrayList<>()));
                     person.getEnrollments().add(enrollment);
                     personRepository.save(person);
                     activity.getEnrollments().add(enrollment);

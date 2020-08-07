@@ -21,7 +21,7 @@ public class Enrollment extends BaseEntity{
 
 
     private LocalDateTime enrollmentDate;
-
+    private Integer dayOfWeek;
 
     @OneToMany
     @JoinColumn(name = "enrollment_id")

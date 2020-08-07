@@ -42,7 +42,7 @@ class FormButton extends React.Component {
 						>
 							Update
 						</Button>
-						<Link to={"/activities/report/" + this.props.data.id}>
+						<Link to={"/activities/report?id=" + this.props.data.id}>
 							<Button
 								style={{
 									backgroundColor: "#FFCC00",

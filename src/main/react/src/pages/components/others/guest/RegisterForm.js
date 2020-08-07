@@ -102,6 +102,14 @@ class RegisterFrom extends React.Component {
 						error.response.data.validationErrors
 					) {
 						this.setState({ errors: error.response.data.validationErrors });
+						if (error.response.data.validationErrors.identificationNumber) {
+							alert(
+								"Identification number " +
+									error.response.data.validationErrors.identificationNumber
+							);
+						} else if (error.response.data.validationErrors.email) {
+							alert("Email " + error.response.data.validationErrors.email);
+						}
 					} else {
 						alert(error.response.data);
 					}

@@ -34,7 +34,7 @@ public class StatisticServiceImpl implements StatisticService {
         List<String> listKeys = new ArrayList<String>(keySet);
 
         for (String s : activityRepository.getDayOfWeek(id)) {
-            lmap.put(listKeys.get(Integer.parseInt(s.split(",")[0])),Long.parseLong(String.valueOf(s.split(",")[1])));
+            lmap.put(listKeys.get(Integer.parseInt(s.split(",")[0])-1),Long.parseLong(String.valueOf(s.split(",")[1])));
         }
         return lmap;
     }

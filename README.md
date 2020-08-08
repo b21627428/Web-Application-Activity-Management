@@ -11,3 +11,5 @@
 <img src="images/adminCreateActivityPage.png" />
 <img src="images/adminUpdateActivityModal.png" />
 <img src="images/adminAddQuestionModal.png" />
+<img src="images/adminActivityReportPeople.png" />
+<img src="images/adminActivityReportChart.png" />

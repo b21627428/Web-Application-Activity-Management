@@ -1,6 +1,9 @@
 import React from "react";
 
 import { getActivityStatistic } from "../../../api/apiCalls";
+import { Card, Tabs, Tab } from "react-bootstrap";
+import PeopleList from "./report/PeopleList";
+import Chart from "./report/Chart";
 
 class Report extends React.Component {
 	constructor(props) {
@@ -12,11 +15,10 @@ class Report extends React.Component {
 	componentDidMount = async () => {
 		try {
 			const id = this.getSearchParameters()["id"];
-			console.log(id);
+
 			const params = {
 				id,
 			};
-			console.log(params);
 			const response = await getActivityStatistic(params);
 			this.setState({ data: response.data });
 		} catch (error) {
@@ -40,7 +42,31 @@ class Report extends React.Component {
 		return params;
 	}
 	render() {
-		return <div>{this.state.id}</div>;
+		return (
+			<div className="" style={{}}>
+				<Tabs
+					style={{ color: "whitesmoke", backgroundColor: "darkred" }}
+					defaultActiveKey="chart"
+				>
+					<Tab eventKey="people" title="People">
+						<Card
+							className="p-5 shadow"
+							style={{ border: "0px", backgroundColor: "whitesmoke" }}
+						>
+							<PeopleList data={this.state.data.enrolledPeople} />
+						</Card>
+					</Tab>
+					<Tab eventKey="chart" title="Chart">
+						<Card
+							className="p-5 shadow"
+							style={{ border: "0px", backgroundColor: "whitesmoke" }}
+						>
+							<Chart data={this.state.data.enrollmentCountByDayOfWeek} />
+						</Card>
+					</Tab>
+				</Tabs>
+			</div>
+		);
 	}
 }
 export default Report;

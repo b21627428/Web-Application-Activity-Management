@@ -29,7 +29,6 @@ public class StatisticServiceImpl implements StatisticService {
     private LinkedHashMap<String,Long> getDayOfWeek(Long id){
         LinkedHashMap<String,Long> lmap = new LinkedHashMap<String,Long>();
         Arrays.asList("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday").forEach(s -> lmap.put(s,0L));
-        System.out.println(lmap);
         Set<String> keySet = lmap.keySet();
         List<String> listKeys = new ArrayList<String>(keySet);
 

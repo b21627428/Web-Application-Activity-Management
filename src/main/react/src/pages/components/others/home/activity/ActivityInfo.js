@@ -25,14 +25,11 @@ class ActivityInfo extends React.Component {
 		if (r === true) {
 			try {
 				await cancelEnrollment(this.getParams());
-				this.changeAlreadyEnrolled(false);
+				window.location.reload();
 			} catch (error) {
 				alert("Connection failed...");
 			}
 		}
-	};
-	changeAlreadyEnrolled = (value) => {
-		this.props.data.isAlreadyEnrolled = value;
 	};
 	getParams = () => {
 		const { activityId } = this.props.data;

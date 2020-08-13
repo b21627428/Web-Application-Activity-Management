@@ -61,8 +61,8 @@ class EnrollContainer extends React.Component {
 				body["givenAnswers"] = this.state.givenAnswers;
 				await makeEnrollment(body);
 				alert("Sucessfully enrolled.Please check your email for Qr Code...");
-				this.props.changeAlreadyEnrolled(true);
 				sendEmail(this.props.getParams());
+				window.location.reload();
 			} catch (error) {
 				try {
 					alert(error.response.data.message);

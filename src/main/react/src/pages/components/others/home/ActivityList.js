@@ -7,6 +7,8 @@ import ActivityInfo from "./activity/ActivityInfo";
 import { Pagination } from "./Pagination";
 
 import { Card, Row, Col } from "react-bootstrap";
+import { checkEnrollment } from "../../../../api/apiCalls";
+import axios from "axios";
 
 class ActivityList extends React.Component {
 	constructor() {
@@ -25,7 +27,6 @@ class ActivityList extends React.Component {
 
 	handlePageChange = (pageNumber) => {
 		const page = pageNumber - 1;
-		console.log(page);
 		this.getActivities(page, this.state.sortBy, this.state.search);
 	};
 
@@ -44,8 +45,20 @@ class ActivityList extends React.Component {
 			sortBy,
 		};
 		const response = await listActivities(params);
+		let enrolledArray = [];
+		if (localStorage.getItem("user")) {
+			const promises = response.data.content.map((row) =>
+				checkEnrollment({
+					identificationNumber: JSON.parse(localStorage.getItem("user")).sub,
+					activityId: row.activityId,
+				})
+			);
+			const results = await axios.all(promises);
+			enrolledArray = results.map((v) => v.data);
+		}
 		this.setState({
 			data: response.data.content,
+			enrolledArray,
 			total: response.data.totalElements,
 			page,
 			sortBy,
@@ -70,7 +83,7 @@ class ActivityList extends React.Component {
 		return params;
 	}
 	render() {
-		const { data, total, size } = this.state;
+		const { data, total, size, enrolledArray } = this.state;
 		return (
 			<div className="pt-4">
 				{data.length !== 0 ? (
@@ -83,11 +96,18 @@ class ActivityList extends React.Component {
 							ordered={this.state.sortBy}
 						/>
 						<Row>
-							{data.map((row) => (
-								<Col className="col-3">
-									<ActivityInfo data={row} />
-								</Col>
-							))}
+							{data.map((row, index) => {
+								var boolean = enrolledArray[index];
+								return (
+									<Col key={index} className="col-3">
+										{localStorage.getItem("user") ? (
+											<ActivityInfo data={row} isAlreadyEnrolled={boolean} />
+										) : (
+											<ActivityInfo data={row} isAlreadyEnrolled={false} />
+										)}
+									</Col>
+								);
+							})}
 						</Row>
 					</div>
 				) : (

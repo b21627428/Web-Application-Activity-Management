@@ -37,7 +37,7 @@ public class EnrollmentController {
             enrollmentService.checkEnrollment(new CancelEnrollmentRequst(identificationNumber,activityId));
             return ResponseEntity.ok(true);
         }catch (Exception e){
-            return ResponseEntity.unprocessableEntity().body(e.getMessage());
+            return ResponseEntity.ok(false);
         }
     }
 

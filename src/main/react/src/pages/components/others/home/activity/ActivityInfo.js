@@ -17,29 +17,23 @@ import QrCodeModal from "./QrCodeModal";
 
 import styles from "../mystyle.module.css";
 
-import { checkEnrollment } from "../../../../../api/apiCalls";
 import { cancelEnrollment } from "../../../../../api/apiCalls";
 
 class ActivityInfo extends React.Component {
-	constructor() {
-		super();
-		this.state = {};
-	}
-
 	cancel = async (event) => {
 		const r = await window.confirm("Do you really want to cancel enrollment?");
 		if (r === true) {
 			try {
 				await cancelEnrollment(this.getParams());
 				this.changeAlreadyEnrolled(false);
-			} catch (error) {}
+			} catch (error) {
+				alert("Connection failed...");
+			}
 		}
 	};
-
 	changeAlreadyEnrolled = (value) => {
-		this.setState({ isAlreadyEnrolled: value });
+		this.props.data.isAlreadyEnrolled = value;
 	};
-
 	getParams = () => {
 		const { activityId } = this.props.data;
 		const identificationNumber = JSON.parse(localStorage.getItem("user")).sub;
@@ -49,25 +43,14 @@ class ActivityInfo extends React.Component {
 		};
 		return params;
 	};
-	componentDidMount = async (event) => {
-		try {
-			if (localStorage.getItem("user")) {
-				const response = await checkEnrollment(this.getParams());
-				this.setState({ isAlreadyEnrolled: response.data });
-			} else this.setState({ isAlreadyEnrolled: false });
-		} catch (error) {
-			this.setState({ isAlreadyEnrolled: false });
-		}
-	};
+
 	truncate(str) {
 		return str !== null && str.length > 120
 			? str.substring(0, 117) + "..."
 			: str;
 	}
 	render() {
-		const { isAlreadyEnrolled } = this.state;
-		const { data } = this.props;
-
+		const { data, isAlreadyEnrolled } = this.props;
 		return (
 			<Card
 				style={{

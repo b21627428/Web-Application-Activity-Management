@@ -17,13 +17,6 @@ import { changeActivity } from "../../../../api/apiCalls";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
 
 class ActivityCard extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			isActive: false,
-		};
-	}
-
 	onDelete = async (event) => {
 		const r = await window.confirm("Do you really want to delete activity?");
 		if (r === true) {
@@ -45,8 +38,7 @@ class ActivityCard extends React.Component {
 		const r = await window.confirm(
 			"Do you really want to change active situation?"
 		);
-		let { isActive } = this.state;
-		const { id } = this.props.data;
+		let { id, isActive } = this.props.data;
 		if (r === true) {
 			try {
 				const params = {
@@ -63,17 +55,16 @@ class ActivityCard extends React.Component {
 					alert("Connection failed");
 				}
 			} finally {
-				this.setState({ isActive });
+				this.props.data.isActive = isActive;
 			}
 		} else {
-			this.setState({ isActive });
+			this.setState({});
 		}
 	};
-	componentDidMount = async (event) => {
-		this.setState({ isActive: this.props.data.isActive });
-	};
 	truncate(str) {
-		return str !== null && str.length > 80 ? str.substring(0, 77) + "..." : str;
+		return str !== null && str.length > 120
+			? str.substring(0, 117) + "..."
+			: str;
 	}
 	render() {
 		const { data } = this.props;
@@ -158,7 +149,7 @@ class ActivityCard extends React.Component {
 					<Row>
 						<Col className="ml-3">
 							<BootstrapSwitchButton
-								checked={this.state.isActive}
+								checked={this.props.data.isActive}
 								onlabel="Active"
 								onstyle="info"
 								offlabel="Not Active"

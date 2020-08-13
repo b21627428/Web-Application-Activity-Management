@@ -45,17 +45,16 @@ class ActivityCard extends React.Component {
 					id,
 					did: !isActive,
 				};
-				console.log(params);
 				await changeActivity(params);
 				isActive = !isActive;
+				this.props.data.isActive = isActive;
 			} catch (error) {
 				try {
 					alert(error.response.data.message);
 				} catch (error2) {
 					alert("Connection failed");
 				}
-			} finally {
-				this.props.data.isActive = isActive;
+				this.setState({});
 			}
 		} else {
 			this.setState({});

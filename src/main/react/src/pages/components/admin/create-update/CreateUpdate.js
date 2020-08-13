@@ -31,13 +31,23 @@ class CreateUpdateForm extends React.Component {
 					.then(async (url) => {
 						params["pictureUrl"] = url;
 						if (this.props.data) {
-							await updateActivity(params);
-							alert("Succesfully updated");
+							try {
+								await updateActivity(params);
+								alert("Succesfully updated");
+								this.props.handleClose();
+								window.location.reload();
+							} catch (error) {
+								alert(error.response.data.message);
+							}
 						} else {
-							await createActivity(params);
-							alert("Succesfully created");
+							try {
+								await createActivity(params);
+								alert("Succesfully created");
+								window.location.href = "/";
+							} catch (error) {
+								alert(error.response.data.message);
+							}
 						}
-						window.location.href = "/";
 					});
 			}
 		);
@@ -59,7 +69,11 @@ class CreateUpdateForm extends React.Component {
 					try {
 						await updateActivity(params);
 						alert("Succesfully updated");
-					} catch (error) {}
+						this.props.handleClose();
+						window.location.reload();
+					} catch (error) {
+						alert(error.response.data.message);
+					}
 				} else if (image !== undefined) {
 					await this.imageUploadAndRecord(image, params);
 				}

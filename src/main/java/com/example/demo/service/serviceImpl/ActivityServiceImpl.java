@@ -41,6 +41,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public void createActivity(CreateActivityDTO createActivityDTO) {
         createActivityDTO.setIsActive(false);
+        if(createActivityDTO.getStartDate().isBefore(LocalDateTime.now())) throw new RuntimeException("The activity in the past can not create");
         activityRepository.save(modelMapper.map(createActivityDTO,Activity.class));
     }
 

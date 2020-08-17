@@ -50,7 +50,6 @@ class LoginForm extends React.Component {
 				localStorage.setItem("token", response.data);
 				const user = jwt.decode(response.data);
 				localStorage.setItem("user", JSON.stringify(user));
-				alert("Succesfully login...");
 				window.location.href = "/";
 			} catch (error) {
 				try {

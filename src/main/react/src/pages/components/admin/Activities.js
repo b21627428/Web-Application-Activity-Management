@@ -7,6 +7,7 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import AddIcon from "@material-ui/icons/Add";
+
 class Activities extends React.Component {
 	constructor() {
 		super();
@@ -24,7 +25,7 @@ class Activities extends React.Component {
 		const page = 0;
 		this.getActivities(page, sortBy, search);
 	};
-	componentDidMount = () => {
+	componentWillMount = () => {
 		const search = this.getSearchParameters()["search"];
 		const sortBy = "startDate";
 		const page = 0;
@@ -85,6 +86,7 @@ class Activities extends React.Component {
 		}
 		return params;
 	}
+
 	render() {
 		const { data, total, size } = this.state;
 		return (

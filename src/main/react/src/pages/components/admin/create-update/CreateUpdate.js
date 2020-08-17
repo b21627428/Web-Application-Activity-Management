@@ -55,27 +55,31 @@ class CreateUpdateForm extends React.Component {
 	onCreateUpdate = async () => {
 		if (!this.isThereError()) {
 			var params = this.getParams();
-			if (this.props.data) {
-				params["id"] = this.props.data.id;
-				params["pictureUrl"] = this.props.data.pictureUrl;
-			}
-			if (params["startDate"] > params["endDate"]) {
-				alert("The start date must be before end date");
+			if (params["quota"] <= 0) {
+				alert("Quota must be positive..");
 			} else {
-				var image = document.getElementById("picture").files[0];
-				if (image === undefined && !this.props.data) {
-					alert("The image must be choosen");
-				} else if (image === undefined && this.props.data) {
-					try {
-						await updateActivity(params);
-						alert("Succesfully updated");
-						this.props.handleClose();
-						window.location.reload();
-					} catch (error) {
-						alert(error.response.data.message);
+				if (this.props.data) {
+					params["id"] = this.props.data.id;
+					params["pictureUrl"] = this.props.data.pictureUrl;
+				}
+				if (params["startDate"] > params["endDate"]) {
+					alert("The start date must be before end date");
+				} else {
+					var image = document.getElementById("picture").files[0];
+					if (image === undefined && !this.props.data) {
+						alert("The image must be choosen");
+					} else if (image === undefined && this.props.data) {
+						try {
+							await updateActivity(params);
+							alert("Succesfully updated");
+							this.props.handleClose();
+							window.location.reload();
+						} catch (error) {
+							alert(error.response.data.message);
+						}
+					} else if (image !== undefined) {
+						await this.imageUploadAndRecord(image, params);
 					}
-				} else if (image !== undefined) {
-					await this.imageUploadAndRecord(image, params);
 				}
 			}
 		} else {

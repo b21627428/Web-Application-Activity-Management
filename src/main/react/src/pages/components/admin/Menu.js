@@ -10,13 +10,13 @@ class Menu extends React.Component {
 				style={{ backgroundColor: "darkgray", color: "white", width: "250px" }}
 			>
 				{" "}
-				<Link
-					to="/"
+				<a
+					href="/"
 					style={{ backgroundColor: "#e3e3e3", color: "black" }}
 					className="w3-bar-item w3-button"
 				>
 					Activites
-				</Link>
+				</a>
 				<Link
 					to="/dashboard"
 					style={{ backgroundColor: "#e3e3e3", color: "black" }}

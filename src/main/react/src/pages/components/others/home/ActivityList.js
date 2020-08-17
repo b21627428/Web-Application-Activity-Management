@@ -32,7 +32,7 @@ class ActivityList extends React.Component {
 
 	componentDidMount = () => {
 		const search = this.getSearchParameters()["search"];
-		const sortBy = "startDate";
+		const sortBy = "name";
 		const page = 0;
 		this.getActivities(page, sortBy, search !== undefined ? search : "");
 	};

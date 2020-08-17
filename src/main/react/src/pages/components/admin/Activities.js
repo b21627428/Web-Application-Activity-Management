@@ -51,7 +51,7 @@ class Activities extends React.Component {
 
 	handleOrderByChange = async (event) => {
 		let { name } = event.target;
-		this.getActivities(this.state.page, name, this.state.search);
+		this.getActivities(0, name, this.state.search);
 	};
 
 	handlePageChange = (pageNumber) => {

@@ -25,7 +25,7 @@ class Activities extends React.Component {
 		const page = 0;
 		this.getActivities(page, sortBy, search);
 	};
-	componentWillMount = () => {
+	componentDidMount = () => {
 		const search = this.getSearchParameters()["search"];
 		const sortBy = "startDate";
 		const page = 0;

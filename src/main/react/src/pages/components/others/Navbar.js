@@ -82,6 +82,11 @@ class Header extends React.Component {
 						type="text"
 						placeholder="Search"
 						onChange={(event) => this.onChange(event)}
+						onKeyPress={(e) => {
+							if (e.key === "Enter") {
+								this.onSearch(e);
+							}
+						}}
 					/>
 					<span className="input-group-text" onClick={this.onSearch}>
 						<SearchIcon />

@@ -73,6 +73,11 @@ export const Pagination = ({
 						type="text"
 						placeholder="Search"
 						onChange={(e) => change(e)}
+						onKeyPress={(e) => {
+							if (e.key === "Enter") {
+								search(e);
+							}
+						}}
 					/>
 					<span className="input-group-text" onClick={(e) => search(e)}>
 						<SearchIcon />

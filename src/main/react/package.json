@@ -27,7 +27,8 @@
 		"react-google-maps": "^9.4.5",
 		"react-js-pagination": "^3.0.3",
 		"react-router-dom": "5.2.0",
-		"react-scripts": "3.4.1"
+		"react-scripts": "3.4.1",
+		"sweetalert": "^2.1.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",

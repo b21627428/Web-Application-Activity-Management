@@ -2,14 +2,22 @@ import React from "react";
 
 import { Navbar, Button } from "react-bootstrap";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import swal from "sweetalert";
 
 class AdminNavbar extends React.Component {
 	logOut = (event) => {
-		const r = window.confirm("Do you really want to Sign Out?");
-		if (r === true) {
-			localStorage.clear();
-			window.location.replace("/");
-		}
+		swal({
+			title: "Are you sure?",
+			text: "Do you really want to Sign Out?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		}).then((logout) => {
+			if (logout) {
+				localStorage.clear();
+				window.location.replace("/");
+			}
+		});
 	};
 	render() {
 		return (

@@ -15,50 +15,85 @@ import ViewModal from "./ViewModal";
 import { deleteActivity } from "../../../../api/apiCalls";
 import { changeActivity } from "../../../../api/apiCalls";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
+import swal from "sweetalert";
 
 class ActivityCard extends React.Component {
 	onDelete = async (event) => {
-		const r = await window.confirm("Do you really want to delete activity?");
-		if (r === true) {
-			try {
-				await deleteActivity(this.props.data.id);
-				alert("Sucessfuly deleted..");
-				window.location.reload();
-			} catch (error) {
+		swal({
+			title: "Are you sure?",
+			text: "Do you really want to delete activity?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		}).then(async (willDelete) => {
+			if (willDelete) {
 				try {
-					alert(error.response.data.message);
-				} catch (error2) {
-					alert("Connection failed");
+					await deleteActivity(this.props.data.id);
+					await swal({
+						title: "Succesfully deleted.",
+						icon: "success",
+					});
+					window.location.reload();
+				} catch (error) {
+					try {
+						swal({
+							title: error.response.data.message,
+							icon: "warning",
+							dangerMode: true,
+						});
+					} catch (error2) {
+						swal({
+							title: "Warning!",
+							text: "Connection failed.",
+							icon: "warning",
+							dangerMode: true,
+						});
+					}
 				}
 			}
-		}
+		});
 	};
 
 	changeActive = async (event) => {
-		const r = await window.confirm(
-			"Do you really want to change active situation?"
-		);
-		let { id, isActive } = this.props.data;
-		if (r === true) {
-			try {
+		var { id, isActive } = this.props.data;
+		swal({
+			title: "Are you sure?",
+			text: "Do you really want to change active situation?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		}).then(async (change) => {
+			if (change) {
 				const params = {
 					id,
 					did: !isActive,
 				};
-				await changeActivity(params);
-				isActive = !isActive;
-				this.props.data.isActive = isActive;
-			} catch (error) {
 				try {
-					alert(error.response.data.message);
-				} catch (error2) {
-					alert("Connection failed");
+					await changeActivity(params);
+
+					isActive = !isActive;
+					this.props.data.isActive = isActive;
+				} catch (error) {
+					try {
+						swal({
+							title: error.response.data.message,
+							icon: "warning",
+							dangerMode: true,
+						});
+					} catch (error2) {
+						swal({
+							title: "Warning!",
+							text: "Connection failed.",
+							icon: "warning",
+							dangerMode: true,
+						});
+					}
+					this.setState({});
 				}
+			} else {
 				this.setState({});
 			}
-		} else {
-			this.setState({});
-		}
+		});
 	};
 	truncate(str) {
 		return str !== null && str.length > 120

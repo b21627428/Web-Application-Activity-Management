@@ -50,6 +50,7 @@ public class ActivityServiceImpl implements ActivityService {
         Activity old = activityRepository.findById(updateActivityDTO.getId()).get();
         if(old.getStartDate().isBefore(LocalDateTime.now())) throw new RuntimeException("The activity in the past can not update");
         modelMapper.map(updateActivityDTO,old);
+        old.setIsActive(false);
         return modelMapper.map(activityRepository.save(old),UpdateActivityDTO.class);
     }
 

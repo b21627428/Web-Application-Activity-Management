@@ -3,6 +3,8 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import jwt from "jsonwebtoken";
 import { login } from "../../../../api/apiCalls";
 import { Input } from "./Input";
+import swal from "sweetalert";
+
 class LoginForm extends React.Component {
 	constructor(props) {
 		super(props);
@@ -47,30 +49,56 @@ class LoginForm extends React.Component {
 			try {
 				const response = await login(creds);
 
-				localStorage.setItem("token", response.data);
-				const user = jwt.decode(response.data);
-				localStorage.setItem("user", JSON.stringify(user));
-				window.location.href = "/";
+				swal({
+					title: "Successfully login.Directing...",
+					icon: "success",
+					timer: 1500,
+				}).then((isClicked) => {
+					localStorage.setItem("token", response.data);
+					const user = jwt.decode(response.data);
+					localStorage.setItem("user", JSON.stringify(user));
+					window.location.href = "/";
+				});
 			} catch (error) {
 				try {
 					if (error.response.status === 422)
-						alert("The identification number or password wrong");
+						swal({
+							title: "Warning!",
+							text: "The identification number or password is wrong.",
+							icon: "warning",
+							dangerMode: true,
+						});
 					else if (error.response.status === 400) {
 						this.setState({ errors: error.response.data.validationErrors });
-						alert(
-							"Identification number " +
-								error.response.data.validationErrors.identificationNumber
-						);
+						swal({
+							title: "Warning!",
+							text:
+								"Identification number " +
+								error.response.data.validationErrors.identificationNumber.toLowerCase(),
+
+							icon: "warning",
+							dangerMode: true,
+						});
 					}
 				} catch (err) {
-					alert("Connection failed...");
+					swal({
+						title: "Warning!",
+						text: "Connection failed.",
+						icon: "warning",
+						dangerMode: true,
+					});
 				}
 			}
 			this.setState({
 				pendingApiCall: false,
 			});
 		} else {
-			alert("All blanks must be filled...");
+			swal({
+				title: "Warning!",
+				text: "All blanks must be filled.",
+				icon: "warning",
+				dangerMode: true,
+			});
 		}
 	};
 	render() {

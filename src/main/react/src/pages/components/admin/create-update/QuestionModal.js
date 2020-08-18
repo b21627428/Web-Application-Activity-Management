@@ -5,6 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Modal from "@material-ui/core/Modal";
 
 import { addQuestion } from "../../../../api/apiCalls";
+import swal from "sweetalert";
 
 class QuestionModal extends React.Component {
 	constructor() {
@@ -37,7 +38,12 @@ class QuestionModal extends React.Component {
 	};
 	onClick = async (event) => {
 		if (this.state.question.trim() === "") {
-			alert("Blank must be filled..");
+			swal({
+				title: "Warning!",
+				text: "Blank must be filled.",
+				icon: "warning",
+				dangerMode: true,
+			});
 		} else {
 			const { id } = this.props;
 			const { question } = this.state;
@@ -47,32 +53,21 @@ class QuestionModal extends React.Component {
 			};
 			try {
 				const response = await addQuestion(params);
-				alert(response.data);
+				await swal({
+					title: "Good job!",
+					text: response.data,
+					icon: "success",
+				});
 				this.handleClose();
 				this.props.getQuestion();
 			} catch (error) {
-				alert(error.response);
+				swal({
+					title: error.response.data.message,
+					icon: "warning",
+					dangerMode: true,
+				});
 			}
 		}
-		// if (!this.isThereError()) {
-		// 	try {
-		// 		const body = await this.props.getParams();
-		// 		body["givenAnswers"] = this.state.givenAnswers;
-		// 		await makeEnrollment(body);
-		// 		alert("Sucessfully enrolled.Please check your email for Qr Code...");
-		// 		this.props.changeAlreadyEnrolled(true);
-		// 		sendEmail(this.props.getParams());
-		// 	} catch (error) {
-		// 		try {
-		// 			alert(error.response.data.message);
-		// 		} catch (error2) {
-		// 			alert("Connection failed");
-		// 		}
-		// 		this.props.handleClose();
-		// 	}
-		// } else {
-		// 	alert("All blanks must be filled...");
-		// }
 	};
 
 	render() {

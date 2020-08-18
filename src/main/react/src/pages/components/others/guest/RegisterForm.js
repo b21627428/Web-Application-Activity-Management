@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Input } from "./Input";
 import { signup } from "../../../../api/apiCalls";
+import swal from "sweetalert";
 
 class RegisterFrom extends React.Component {
 	constructor(props) {
@@ -88,12 +89,18 @@ class RegisterFrom extends React.Component {
 			password,
 			email,
 		};
+
 		if (!this.isThereError()) {
 			this.setState({ pendingApiCall: true });
 			try {
 				const response = await signup(body);
-				alert("Successfully " + response.data.toLowerCase());
-				window.location.replace("/register-login?q=login");
+				swal({
+					title: "Good job!",
+					text: "Successfully " + response.data.toLowerCase(),
+					icon: "success",
+				}).then((isClicked) => {
+					window.location.replace("/register-login?q=login");
+				});
 			} catch (error) {
 				try {
 					if (
@@ -103,25 +110,45 @@ class RegisterFrom extends React.Component {
 					) {
 						this.setState({ errors: error.response.data.validationErrors });
 						if (error.response.data.validationErrors.identificationNumber) {
-							alert(
-								"Identification number " +
-									error.response.data.validationErrors.identificationNumber
-							);
+							swal({
+								title: "Warning!",
+								text:
+									"Identification number " +
+									error.response.data.validationErrors.identificationNumber.toLowerCase(),
+
+								icon: "warning",
+								dangerMode: true,
+							});
 						} else if (error.response.data.validationErrors.email) {
-							alert("Email " + error.response.data.validationErrors.email);
+							swal({
+								title: "Warning!",
+								text: "Email " + error.response.data.validationErrors.email,
+								icon: "warning",
+								dangerMode: true,
+							});
 						}
 					} else {
-						alert(error.response.data);
+						swal(error.response.data);
 					}
 				} catch (err) {
-					alert("Connection failed...");
+					swal({
+						title: "Warning!",
+						text: "Connection failed.",
+						icon: "warning",
+						dangerMode: true,
+					});
 				}
 			}
 			this.setState({
 				pendingApiCall: false,
 			});
 		} else {
-			alert("All blanks must be filled...");
+			swal({
+				title: "Warning!",
+				text: "All blanks must be filled.",
+				icon: "warning",
+				dangerMode: true,
+			});
 		}
 	};
 	render() {

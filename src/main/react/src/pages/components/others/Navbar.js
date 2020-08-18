@@ -11,6 +11,7 @@ import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 import { Navbar, Nav, Form, FormControl, Dropdown } from "react-bootstrap";
+import swal from "sweetalert";
 
 class Header extends React.Component {
 	constructor() {
@@ -24,14 +25,26 @@ class Header extends React.Component {
 		event.preventDefault();
 		if (this.state.search.trim() !== "")
 			window.location.href = "/?search=" + this.state.search.trim();
-		else window.alert("Please type something...");
+		else
+			swal({
+				title: "Please type event title!",
+				icon: "warning",
+				dangerMode: true,
+			});
 	};
 	logOut = (event) => {
-		const r = window.confirm("Do you really want to Sign Out?");
-		if (r === true) {
-			localStorage.clear();
-			window.location.replace("/");
-		}
+		swal({
+			title: "Are you sure?",
+			text: "Do you really want to Sign Out?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		}).then((logout) => {
+			if (logout) {
+				localStorage.clear();
+				window.location.replace("/");
+			}
+		});
 	};
 
 	onChange = (event) => {
@@ -39,21 +52,13 @@ class Header extends React.Component {
 		this.setState({ search: event.target.value });
 	};
 
-	// onKeyUp = (event) => {
-	// 	event.preventDefault();
-	// 	if (event.key === "Enter") {
-	// 		if (this.state.search.trim() !== "")
-	// 			window.location.href = "/search?q=" + this.state.search.trim();
-	// 		else window.alert("Please type something...");
-	// 	}
-	// };
-
 	render() {
 		return (
 			<Navbar
 				style={{ position: "sticky", top: 0, zIndex: 2 }}
 				bg="dark"
 				variant="dark"
+				className="p-3"
 			>
 				<Navbar.Brand className="ml-4" href="/">
 					ACTIVITE

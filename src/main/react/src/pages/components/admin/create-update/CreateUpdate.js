@@ -10,6 +10,7 @@ import { storage } from "../Firebase";
 
 import { createActivity } from "../../../../api/apiCalls";
 import { updateActivity } from "../../../../api/apiCalls";
+import swal from "sweetalert";
 
 class CreateUpdateForm extends React.Component {
 	imageUploadAndRecord = async (image, params) => {
@@ -33,19 +34,35 @@ class CreateUpdateForm extends React.Component {
 						if (this.props.data) {
 							try {
 								await updateActivity(params);
-								alert("Succesfully updated");
+								await swal({
+									title: "Good job!",
+									text: "Succesfully activity updated.",
+									icon: "success",
+								});
 								this.props.handleClose();
 								window.location.reload();
 							} catch (error) {
-								alert(error.response.data.message);
+								swal({
+									title: error.response.data.message,
+									icon: "warning",
+									dangerMode: true,
+								});
 							}
 						} else {
 							try {
 								await createActivity(params);
-								alert("Succesfully created");
+								await swal({
+									title: "Good job!",
+									text: "Succesfully activity created.",
+									icon: "success",
+								});
 								window.location.href = "/";
 							} catch (error) {
-								alert(error.response.data.message);
+								swal({
+									title: error.response.data.message,
+									icon: "warning",
+									dangerMode: true,
+								});
 							}
 						}
 					});
@@ -56,26 +73,49 @@ class CreateUpdateForm extends React.Component {
 		if (!this.isThereError()) {
 			var params = this.getParams();
 			if (params["quota"] <= 0) {
-				alert("Quota must be positive..");
+				swal({
+					title: "Warning!",
+					text: "Quota must be positive!",
+					icon: "warning",
+					dangerMode: true,
+				});
 			} else {
 				if (this.props.data) {
 					params["id"] = this.props.data.id;
 					params["pictureUrl"] = this.props.data.pictureUrl;
 				}
 				if (params["startDate"] > params["endDate"]) {
-					alert("The start date must be before end date");
+					swal({
+						title: "Warning!",
+						text: "The start date must be before end date!",
+						icon: "warning",
+						dangerMode: true,
+					});
 				} else {
 					var image = document.getElementById("picture").files[0];
 					if (image === undefined && !this.props.data) {
-						alert("The image must be choosen");
+						swal({
+							title: "Warning!",
+							text: "The image must be choosen!",
+							icon: "warning",
+							dangerMode: true,
+						});
 					} else if (image === undefined && this.props.data) {
 						try {
 							await updateActivity(params);
-							alert("Succesfully updated");
+							await swal({
+								title: "Good job!",
+								text: "Succesfully activity updated.",
+								icon: "success",
+							});
 							this.props.handleClose();
 							window.location.reload();
 						} catch (error) {
-							alert(error.response.data.message);
+							swal({
+								title: error.response.data.message,
+								icon: "warning",
+								dangerMode: true,
+							});
 						}
 					} else if (image !== undefined) {
 						await this.imageUploadAndRecord(image, params);
@@ -83,7 +123,12 @@ class CreateUpdateForm extends React.Component {
 				}
 			}
 		} else {
-			alert("All blanks must be filled.");
+			swal({
+				title: "Warning!",
+				text: "All blanks must be filled.",
+				icon: "warning",
+				dangerMode: true,
+			});
 		}
 	};
 	isThereError() {

@@ -7,6 +7,7 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import AddIcon from "@material-ui/icons/Add";
+import swal from "sweetalert";
 
 class Activities extends React.Component {
 	constructor() {
@@ -68,7 +69,12 @@ class Activities extends React.Component {
 		event.preventDefault();
 		if (this.state.search.trim() !== "")
 			window.location.href = "/?search=" + this.state.search.trim();
-		else window.alert("Please type something...");
+		else
+			swal({
+				title: "Please type event title!",
+				icon: "warning",
+				dangerMode: true,
+			});
 	};
 	getSearchParameters() {
 		var prmstr = window.location.search.substr(1);

@@ -18,17 +18,30 @@ import QrCodeModal from "./QrCodeModal";
 import styles from "../mystyle.module.css";
 
 import { cancelEnrollment } from "../../../../../api/apiCalls";
+import swal from "sweetalert";
 
 class ActivityInfo extends React.Component {
 	cancel = async (event) => {
-		const r = await window.confirm("Do you really want to cancel enrollment?");
-		if (r === true) {
-			try {
-				await cancelEnrollment(this.getParams());
-				window.location.reload();
-			} catch (error) {
-				alert("Connection failed...");
-			}
+		try {
+			swal({
+				title: "Are you sure?",
+				text: "Do you really want to cancel enrollment?",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			}).then(async (canceled) => {
+				if (canceled) {
+					await cancelEnrollment(this.getParams());
+					window.location.reload();
+				}
+			});
+		} catch (error) {
+			swal({
+				title: "Warning!",
+				text: "Connection failed.",
+				icon: "warning",
+				dangerMode: true,
+			});
 		}
 	};
 	getParams = () => {

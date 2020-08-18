@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { getAskedQuestions } from "../../../../../api/apiCalls";
 import { makeEnrollment } from "../../../../../api/apiCalls";
 import { sendEmail } from "../../../../../api/apiCalls";
+import swal from "sweetalert";
 
 class EnrollContainer extends React.Component {
 	constructor() {
@@ -60,19 +61,34 @@ class EnrollContainer extends React.Component {
 				const body = await this.props.getParams();
 				body["givenAnswers"] = this.state.givenAnswers;
 				await makeEnrollment(body);
-				alert("Sucessfully enrolled.Please check your email for Qr Code...");
-				sendEmail(this.props.getParams());
-				window.location.reload();
+				swal({
+					title: "Good job!",
+					text: "Sucessfully enrolled.Please check your email for Qr Code...",
+					icon: "success",
+				}).then((isClicked) => {
+					sendEmail(this.props.getParams());
+					window.location.reload();
+				});
 			} catch (error) {
 				try {
-					alert(error.response.data.message);
+					swal(error.response.data.message);
 				} catch (error2) {
-					alert("Connection failed");
+					swal({
+						title: "Warning!",
+						text: "Connection failed.",
+						icon: "warning",
+						dangerMode: true,
+					});
 				}
 				this.props.handleClose();
 			}
 		} else {
-			alert("All blanks must be filled...");
+			swal({
+				title: "Warning!",
+				text: "All blanks must be filled.",
+				icon: "warning",
+				dangerMode: true,
+			});
 		}
 	};
 	render() {

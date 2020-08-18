@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { deleteQuestion } from "../../../../api/apiCalls";
+import swal from "sweetalert";
 
 class Question extends React.Component {
 	onDelete = async () => {
@@ -10,10 +11,19 @@ class Question extends React.Component {
 				id,
 			};
 			await deleteQuestion(params);
-			await alert("Succesfully deleted.");
-			this.props.getQuestion();
+			swal({
+				title: "Good job!",
+				text: "Succesfully deleted.",
+				icon: "success",
+			}).then(() => {
+				this.props.getQuestion();
+			});
 		} catch (error) {
-			alert(error.response);
+			swal({
+				title: error.response.data.message,
+				icon: "warning",
+				dangerMode: true,
+			});
 		}
 	};
 

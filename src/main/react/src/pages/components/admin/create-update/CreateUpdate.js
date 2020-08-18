@@ -72,10 +72,10 @@ class CreateUpdateForm extends React.Component {
 	onCreateUpdate = async () => {
 		if (!this.isThereError()) {
 			var params = this.getParams();
-			if (params["quota"] <= 0) {
+			if (params["quota"] <= 0 || isNaN(params["quota"])) {
 				swal({
 					title: "Warning!",
-					text: "Quota must be positive!",
+					text: "Quota must be positive integer!",
 					icon: "warning",
 					dangerMode: true,
 				});

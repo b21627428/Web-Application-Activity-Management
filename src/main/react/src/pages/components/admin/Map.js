@@ -10,6 +10,7 @@ import Autocomplete from "react-google-autocomplete";
 import axios from "axios";
 import Geocode from "react-geocode";
 import { Row, Col } from "react-bootstrap";
+import swal from "sweetalert";
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLEKEY);
 Geocode.enableDebug();
@@ -83,7 +84,12 @@ class Map extends React.Component {
 					lng,
 				});
 			} catch (error) {
-				alert("Invalid address");
+				swal({
+					title: "Warning!",
+					text: "Typed address can not be found!",
+					icon: "warning",
+					dangerMode: true,
+				});
 			}
 		}
 	};
